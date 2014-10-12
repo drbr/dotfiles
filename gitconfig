@@ -1,0 +1,31 @@
+[user]
+    name = Andrew Brandon
+    email = drbr@users.noreply.github.com
+
+[color]
+    ui = auto
+
+[alias]
+    st = status
+    cs = commit --fixup=HEAD
+    co = checkout
+    dag = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+
+[push]
+    default = simple
+
+[rerere]
+    enabled = true
+
+[core]
+    pager = less -FMRiX
+    whitespace = -trailing-space
+
+[rebase]
+    autosquash = true
+
+[apply]
+    whitespace = nowarn
+
+[credential]
+	helper = osxkeychain

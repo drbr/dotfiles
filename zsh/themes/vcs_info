@@ -4,10 +4,12 @@
 # http://sourceforge.net/p/zsh/code/ci/master/tree/Misc/vcs_info-examples
 # It has not been verified to work below zsh 4.3.12
 
+
 # PS1='%{[%B%}%* %n@%2m %~%{%b%}]%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
 PS1='%{[%B%}%* %n %~%{%b%}]%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
 $'
 RPROMPT=
+
 
 autoload -Uz vcs_info
 
@@ -25,6 +27,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-st git-remotebranc
 vcs_info-cfc() {
     return 0
 }
+
 
 # Find the untracked files in the repo
 function +vi-git-untracked() {
@@ -62,6 +65,7 @@ function +vi-git-st() {
     fi
 }
 
+
 # Show remote branch name for remote-tracking branches
 function +vi-git-remotobranch() {
     local remote
@@ -85,6 +89,29 @@ function +vi-git-remotobranch() {
     fi
 }
 
+
+# Silently "git fetch" if there have been no fetches recently
+function __git_maybe_fetch() {
+    (( # fork a background job
+    
+    if [ -w . ] && git rev-parse --verify --quiet @{upstream} &>/dev/null; then
+    
+        TEST_FILE="$(git rev-parse --git-dir)/FETCH_HEAD"
+
+        # MTIME="$(stat -c %Y $TEST_FILE 2>/dev/null)"   # Linux version
+        # TIME="$(date -d "10 minutes ago" +%s)"         # Linux version
+        MTIME="$(stat -f %m $TEST_FILE 2>/dev/null)"   # Mac version
+        TIME="$(date -v -10M +%s)"                         # Mac version
+
+        if [ "${MTIME:-0}" -lt "$TIME" ]; then
+            touch "$TEST_FILE" 2>/dev/null && git fetch -q </dev/null &>/dev/null
+        fi
+    fi
+    
+    )&)
+}
+
+
 precmd_vcs_info() {
     vcs_info
     psvar=()
@@ -93,4 +120,3 @@ precmd_vcs_info() {
 
 precmd_functions+='precmd_vcs_info'
 precmd_functions+='__git_maybe_fetch'
-

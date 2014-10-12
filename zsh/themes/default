@@ -1,0 +1,6 @@
+# -*- shell-script -*-
+# Show the current working directory and the username in the shell prompt
+
+PROMPT_COLOR=${PROMPT_COLOR:-cyan}
+PS1="%{${fg[$PROMPT_COLOR]}%}%B%n@%m] %b%{${fg[default]}%}"
+RPROMPT="%{${fg[$PROMPT_COLOR]}%}%B%(7~,.../,)%6~%b%{${fg[default]}%}"

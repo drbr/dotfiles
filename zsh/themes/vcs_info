@@ -1,0 +1,96 @@
+# -*- shell-script -*-
+
+# This "theme" is based on the examples found at:
+# http://sourceforge.net/p/zsh/code/ci/master/tree/Misc/vcs_info-examples
+# It has not been verified to work below zsh 4.3.12
+
+# PS1='%{[%B%}%* %n@%2m %~%{%b%}]%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
+PS1='%{[%B%}%* %n %~%{%b%}]%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
+$'
+RPROMPT=
+
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' stagedstr '+'
+zstyle ':vcs_info:*' unstagedstr '*'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats ' [%b%u%c]%m'
+zstyle ':vcs_info:*' actionformats ' [%a|%b%u%c]'
+zstyle -e ':vcs_info:git:*' check-for-changes 'vcs_info-cfc && reply=( true ) || reply=( false )'
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-st git-remotebranch
+
+
+# Override this method to selectively disable VCS_INFO to check for changes
+# for large repositories. Use $PWD to get the repo directory
+vcs_info-cfc() {
+    return 0
+}
+
+# Find the untracked files in the repo
+function +vi-git-untracked() {
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+        git status --porcelain | grep '??' &> /dev/null ; then
+        # This will show the marker if there are any untracked files in repo.
+        # If instead you want to show the marker only if there are untracked
+        # files in $PWD, use:
+        # [[ -n $(git ls-files --others --exclude-standard) ]]; then
+        hook_com[staged]+='?'
+    fi
+}
+
+
+# Show +N/-N when your local branch is ahead-of or behind remote HEAD.
+# Make sure you have added misc to your 'formats': %m
+function +vi-git-st() {
+    local ahead behind
+    local -a gitstatus
+
+    # for git prior to 1.7
+    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null \
+        | wc -l | tr -d '[:space:]')
+    (( $ahead )) && gitstatus+="↑${ahead}"
+
+    # for git prior to 1.7
+    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null \
+        | wc -l | tr -d '[:space:]')
+    (( $behind )) && gitstatus+="↓${behind}"
+
+    if [[ -n "$gitstatus" ]]; then
+        hook_com[misc]+=" [${(j:/:)gitstatus}]"
+    fi
+}
+
+# Show remote branch name for remote-tracking branches
+function +vi-git-remotobranch() {
+    local remote
+
+    # Are we on a remote-tracking branch?
+    remote=${$(get rev-parse --verify ${hook_com[branch]}@{upstream} \
+        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+
+    # Only show the name of the tracking branch if it differs from the name
+    # of the local branch
+    if [ ${remote#*/} == ${hook_com[branch]} ]]; then
+        remote=${remote%/*}
+    fi
+
+    if [[ -n ${remote} ]]; then
+        if [[ ${#remote} -gt 25 ]]; then
+            hook_com[branch]="${hook_com[branch]} >> ..${remote[-25, ${#remote}]}"
+        else
+            hook_com[branch]="${hook_com[branch]} >> ${remote}"
+        fi
+    fi
+}
+
+precmd_vcs_info() {
+    vcs_info
+    psvar=()
+    [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+precmd_functions+='precmd_vcs_info'
+precmd_functions+='__git_maybe_fetch'
+

@@ -1,0 +1,112 @@
+# Get the directory where the script resides
+script_dir=${0:h}
+
+# Put custom stuff on the path
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+typeset -ga precmd_functions
+typeset -ga preexec_functions
+
+# Colors!
+autoload colors
+colors
+
+
+# Do something about module_path and fpath
+# if we ever want custom modules or functions
+
+
+# Format the command prompt with the specified theme
+ZSH_THEME="vcs_info"
+source $script_dir/themes/$ZSH_THEME
+
+
+# zsh options
+setopt COMPLETE_IN_WORD         # allow tab completion in the middle of a word
+setopt ALWAYS_TO_END            # push that cursor on completions.
+setopt AUTO_NAME_DIRS           # change directories to variable names
+setopt AUTO_PUSHD               # push directories on every cd
+setopt NO_BEEP                  # never ever beep ever
+
+
+# History options
+setopt EXTENDED_HISTORY         # store time in history
+setopt HIST_EXPIRE_DUPS_FIRST   # unique events are more useful
+setopt HIST_VERIFY              # make those history commands nice
+setopt INC_APPEND_HISTORY       # immediately insert history into history file
+setopt HIST_IGNORE_DUPS         # ignore duplicates from previous event
+# setopt SHARE_HISTORY            # share history with all zsh sessions
+HISTSIZE=16000
+SAVEHIST=15000
+HISTFILE=~/.history
+
+
+# Completion style
+# Use compinstall to modify these. See `man zshcompsys` for more info.
+zstyle ':completion:*' completer _expand _complete _approximate
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the charater to insert%s'
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*' use-compctl true
+
+
+# Keybindings for line editor
+bindkey -v
+bindkey "^R" history-incremental-search-backward
+bindkey "^E" end-of-line
+bindkey "^A" beginning-of-line
+bindkey "^T" push-line-or-edit
+
+# VI editing mode is a pain to use if you have to wait for <ESC> to register.
+# This times out multi-char key combos as fast as possible. (1/100th of a second)
+KEYTIMEOUT=1
+
+
+# Aliases for common commands
+alias grep='nocorrect grep --color=auto'
+alias la='ls -alh'
+
+
+# See http://zshwiki.org/home/builtin/functions/zmv
+autoload zmv
+alias 'zcp=noglob zmv -W -C'
+alias 'zln=noglob zmv -W -L'
+alias 'zmv=noglob zmv -W -M'
+
+
+# ssh to specific listed hosts at once
+# This command must be run from within a tmux session
+mssh() {
+    ssh_command="/usr/bin/ssh"
+    tmux new-window "$ssh_command $1"
+    shift
+    while [ ! -z "$1" ]; do
+        tmux split-window -h "$ssh_command $1"
+        shift
+    done
+    tmux select-layout tiled
+    tmux select-pane -t 0
+    tmux set-window-option synchronize-panes on
+}
+
+
+# Pretty-print JSON argement (requires Python 2.6 or higher)
+jsonformat() {
+    echo $1 | python -mjson.tool
+}
+
+
+# cd up according to argument (e.g. `u 2` -> cd ../..)
+u() {
+    set -A ud
+    ud[1+${1-1}]=
+    cd ${(j:../:)ud}
+}
+
+
+autoload -U zutil
+autoload -U compinit
+autoload -U complist
+compinit

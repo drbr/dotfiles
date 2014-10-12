@@ -1,3 +1,12 @@
+#!/bin/zsh
+
+# Launch my installed version of zsh instead of the (older) Mac default
+ZSH=/usr/local/bin/zsh
+if [[ $SHELL != $ZSH && -e $ZSH ]]; then
+    SHELL=$ZSH
+    exec $ZSH "$@"
+fi
+
 # Get the directory where the script resides
 script_dir=${0:h}
 
@@ -10,6 +19,20 @@ typeset -ga preexec_functions
 # Colors!
 autoload colors
 colors
+
+
+# Basic options (not specific to zsh)
+export GREP_COLOR=${GREP_COLOR:-1;35}   # Set the color for grep matches
+DIRSTACKSIZE=20                         # number of directories in pushd/popd stack
+export EDITOR=vim
+export VISUAL=$EDITOR
+export PAGER=less
+
+# Aliases for common commands
+alias grep='nocorrect grep --color=auto'
+alias ls='ls -G'
+alias ll='ls -lh'
+alias la='ls -alh'
 
 
 # Do something about module_path and fpath
@@ -62,11 +85,6 @@ bindkey "^T" push-line-or-edit
 # VI editing mode is a pain to use if you have to wait for <ESC> to register.
 # This times out multi-char key combos as fast as possible. (1/100th of a second)
 KEYTIMEOUT=1
-
-
-# Aliases for common commands
-alias grep='nocorrect grep --color=auto'
-alias la='ls -alh'
 
 
 # See http://zshwiki.org/home/builtin/functions/zmv

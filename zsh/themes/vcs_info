@@ -5,7 +5,7 @@
 # It has not been verified to work below zsh 4.3.12
 
 
-PS1='%{[%B%}%F{magenta}%* %n %~%{%b%}]%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
+PS1='%F{magenta}%{%B%}[%* %n %~]%{%b%}%{%F{yellow}%}%1v%{%f%} %{%F{red}%}%(?..(%?%))%{%f%}
 $'
 RPROMPT=
 

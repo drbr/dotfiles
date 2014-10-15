@@ -10,8 +10,14 @@ fi
 # Get the directory where the script resides
 script_dir=${0:h}
 
-# Put custom stuff on the path
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# Put custom stuff on the path. In zsh, path and PATH are linked, so we can do
+# this cool array trick. Mac OS X initializes PATH to the values in /etc/paths.
+# I add things here because it's more convenient.
+path=(
+    /usr/local/bin
+    /usr/local/sbin
+    $path
+)
 
 typeset -ga precmd_functions
 typeset -ga preexec_functions
@@ -24,15 +30,17 @@ colors
 # Basic options (not specific to zsh)
 export GREP_COLOR=${GREP_COLOR:-1;35}   # Set the color for grep matches
 DIRSTACKSIZE=20                         # number of directories in pushd/popd stack
-export EDITOR=vim
+export EDITOR='vim'
 export VISUAL=$EDITOR
-export PAGER=less
+export PAGER='less -FMRiX'
 
 # Aliases for common commands
 alias grep='nocorrect grep --color=auto'
 alias ls='ls -G'
 alias ll='ls -lh'
 alias la='ls -alh'
+alias less='less -MRiX' # note the missing -F option as opposed to $PAGER
+alias tmux='TERM=screen-256color-bce tmux' # Set TERM for tmux so color scheme works
 
 
 # Do something about module_path and fpath

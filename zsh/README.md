@@ -15,10 +15,6 @@ course):
 source /path/to/dotfiles/zsh/zshrc
 ```
 
-Most of these settings are based on (and are currently largely identical to)
-the default setup for software developers at Amazon. With time, I imagine they
-will diverge.
-
 # Themes
 There are currently two "themes", which are basically just command prompt
 formatting. The "default" theme is nothing special, and the "vcs_info" theme

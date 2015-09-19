@@ -17,7 +17,6 @@ inoremap <Down> <NOP>
 nnoremap <silent> <Bslash> :<C-u>put =repeat(nr2char(10),v:count)<Bar>execute "'[-1"<CR>
 nnoremap <silent> <Enter> :<C-u>put!=repeat(nr2char(10),v:count)<Bar>execute "']+1"<CR>
 
-set nowrap
 set number
 set autoindent
 set smartindent

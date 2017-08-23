@@ -26,6 +26,8 @@ typeset -ga preexec_functions
 autoload colors
 colors
 
+# I use perforce at work
+export P4CONFIG=.p4config
 
 # Basic options (not specific to zsh)
 export GREP_COLOR=${GREP_COLOR:-1;35}   # Set the color for grep matches

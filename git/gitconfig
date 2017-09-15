@@ -21,6 +21,10 @@
 [core]
     pager = less -FMRiX
     whitespace = -trailing-space
+    autocrlf = input
+
+[pull]
+    rebase = true
 
 [rebase]
     autosquash = true

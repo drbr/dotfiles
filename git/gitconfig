@@ -11,6 +11,7 @@
     cs = commit --fixup=HEAD
     co = checkout
     dag = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+    dab = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 
 [push]
     default = simple
@@ -33,4 +34,4 @@
     whitespace = nowarn
 
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain

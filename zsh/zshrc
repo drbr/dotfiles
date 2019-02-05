@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # Launch my installed version of zsh instead of the (older) Mac default
+# IMPORTANT: PUT NO CONFIGURATION BEFORE THIS OR ELSE IT WILL GET RUN TWICE!!!!
 ZSH=/usr/local/bin/zsh
 if [[ $SHELL != $ZSH && -e $ZSH ]]; then
     SHELL=$ZSH
@@ -133,6 +134,10 @@ u() {
     cd ${(j:../:)ud}
 }
 
+# Run this function to set the title of the command prompt
+title() {
+    echo -ne "\033]0;"$*"\007"
+}
 
 autoload -U zutil
 autoload -U compinit

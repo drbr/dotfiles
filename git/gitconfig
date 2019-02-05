@@ -1,6 +1,6 @@
 [user]
     name = Andrew Brandon
-    email = drbr@users.noreply.github.com
+    email = abrandon@tableau.com
 
 [color]
     ui = auto
@@ -35,3 +35,10 @@
 
 [credential]
     helper = osxkeychain
+
+[diff]
+    tool = bc3
+
+[difftool "bc3"]
+    trustExitCode = true
+

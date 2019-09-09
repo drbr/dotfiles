@@ -34,11 +34,15 @@
     whitespace = nowarn
 
 [credential]
-    helper = osxkeychain
 
 [diff]
     tool = bc3
 
 [difftool "bc3"]
     trustExitCode = true
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 

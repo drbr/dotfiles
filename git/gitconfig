@@ -1,6 +1,6 @@
 [user]
     name = Andrew Brandon
-    email = abrandon@tableau.com
+    email = drbr@users.noreply.github.com
 
 [color]
     ui = auto
@@ -46,3 +46,5 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 
+[credential]
+	helper = osxkeychain

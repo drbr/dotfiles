@@ -14,7 +14,7 @@
     dab = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 
 [push]
-    default = simple
+    default = current
 
 [rerere]
     enabled = true

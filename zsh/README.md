@@ -15,6 +15,12 @@ course):
 source /path/to/dotfiles/zsh/zshrc
 ```
 
+# .inputrc
+
+The `inputrc` file isn't actually related to zsh, but enables other command-line
+utilities to use vim emulation. It should reside in `~/.inputrc` (as with most
+other config files, this can be done with a symlink).
+
 # Themes
 There are currently two "themes", which are basically just command prompt
 formatting. The "default" theme is nothing special, and the "vcs_info" theme

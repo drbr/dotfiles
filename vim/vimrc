@@ -49,6 +49,8 @@ set bs=2
 set ignorecase
 set smartcase
 
+"Wrap to next and previous lines when navigating left and right
+set whichwrap+=<,>,h,l,[,]
 
 "Enable searching as you type, rather than waiting until you press enter
 set incsearch

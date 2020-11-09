@@ -12,7 +12,7 @@
     co = checkout
     dag = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
     dab = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-    pp = !git pull && git remote prune origin
+    pp = pull --prune
 
 [push]
     default = current

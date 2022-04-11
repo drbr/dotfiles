@@ -6,6 +6,7 @@
     ui = auto
 
 [alias]
+    br = branch -vv
     st = status
     ci = commit
     cs = commit --fixup=HEAD

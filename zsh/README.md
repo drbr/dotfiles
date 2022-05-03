@@ -7,8 +7,8 @@ my environment up to date. But you may not want to depend on my repo; if that's 
 just copy-paste the contents of `zshrc` into your `~/.zshrc` and ignore the next paragraph.
 
 The zshrc script needs to know the directory it currently lives in. Thus,
-~/.zshrc cannot be a symbolic link, as with the other dotfiles. Instead, add
-the following txt to your ~/.zshrc (replacing the path with your own, of
+`~/.zshrc` cannot be a symbolic link, as with the other dotfiles. Instead, add
+the following txt to your `~/.zshrc` (replacing the path with your own, of
 course):
 
 ```bash

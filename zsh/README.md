@@ -1,6 +1,11 @@
 This folder contains my default settings for zsh.
 
 # Installation
+
+I personally try to symlink the files from the repo so I can just pull the repo to keep
+my environment up to date. But you may not want to depend on my repo; if that's the case,
+just copy-paste the contents of `zshrc` into your `~/.zshrc` and ignore the next paragraph.
+
 The zshrc script needs to know the directory it currently lives in. Thus,
 ~/.zshrc cannot be a symbolic link, as with the other dotfiles. Instead, add
 the following txt to your ~/.zshrc (replacing the path with your own, of

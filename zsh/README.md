@@ -20,6 +20,9 @@ course):
 source /path/to/dotfiles/zsh/zshrc
 ```
 
+You'll also need the `themes` directory to be in the same folder as the `zshrc`
+(or put `themes` wherever you want, and edit the `zshrc` to point to it).
+
 # .inputrc
 
 The `inputrc` file isn't actually related to zsh, but enables other command-line

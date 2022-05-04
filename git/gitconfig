@@ -2,9 +2,6 @@
     name = Andrew Brandon
     email = drbr@users.noreply.github.com
 
-[color]
-    ui = auto
-
 [alias]
     bb = branch -vv
     st = status
@@ -14,9 +11,6 @@
     dag = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
     dab = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     pp = pull --prune
-
-[push]
-    default = current
 
 [rerere]
     enabled = true
@@ -34,8 +28,6 @@
 
 [apply]
     whitespace = nowarn
-
-[credential]
 
 [diff]
     tool = bc3

@@ -2,6 +2,9 @@
     name = Andrew Brandon
     email = drbr@users.noreply.github.com
 
+[init]
+    defaultBranch = main
+
 [alias]
     bb = branch -vv
     st = status

@@ -11,8 +11,8 @@
     ci = commit
     cs = commit --fixup=HEAD
     co = checkout
-    dag = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
-    dab = log --graph --decorate --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    dag = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+    dab = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     pp = pull --prune
 
 [rerere]

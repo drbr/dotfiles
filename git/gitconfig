@@ -15,6 +15,9 @@
     dab = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     pp = pull --prune
 
+[push]
+    default = current
+
 [rerere]
     enabled = true
 

@@ -14,6 +14,7 @@
     dag = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
     dab = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     pp = pull --prune
+    rr = !git checkout main && git pull --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
 
 [push]
     default = current

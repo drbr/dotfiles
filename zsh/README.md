@@ -2,8 +2,8 @@ This folder contains my default settings for zsh.
 
 # Installation
 
-I personally try to symlink the files from the repo so I can just pull the repo to keep
-my environment up to date. But you may not want to depend on my repo; if that's the case,
+I personally clone a copy of the repo onto my computer, then symlink the files from the repo. That way, I can easily keep
+my environment synced across machines. But in the likely case that you don't want to depend on my repo,
 just copy-paste the contents of `zshrc` into your `~/.zshrc` and ignore the next paragraph.
 
 The zshrc script needs to know the directory it currently lives in. Thus,

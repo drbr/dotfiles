@@ -28,9 +28,6 @@ typeset -ga preexec_functions
 autoload colors
 colors
 
-# I use perforce at work
-export P4CONFIG=.p4config
-
 # Basic options (not specific to zsh)
 export GREP_COLOR=${GREP_COLOR:-1;35}   # Set the color for grep matches
 DIRSTACKSIZE=20                         # number of directories in pushd/popd stack
@@ -47,8 +44,7 @@ alias less='less -MRiX' # note the missing -F option as opposed to $PAGER
 alias tmux='TERM=screen-256color-bce tmux' # Set TERM for tmux so color scheme works
 
 
-# Do something about module_path and fpath
-# if we ever want custom modules or functions
+# Do something about module_path and fpath if we ever want custom modules or functions
 
 
 # Format the command prompt with the specified theme

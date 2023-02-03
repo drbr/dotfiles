@@ -15,7 +15,6 @@ script_dir=${0:h}
 # this cool array trick. Mac OS X initializes PATH to the values in /etc/paths.
 # I add things here because it's more convenient.
 path=(
-    /usr/local/opt/ruby/bin  # Use Homebrew Ruby instead of Mac Ruby
     /usr/local/bin
     /usr/local/sbin
     $path

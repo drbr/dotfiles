@@ -40,7 +40,7 @@
 	dag = dam --branches
 
 	# Force-delete local branches whose remote tracking branches no longer exist.
-	# NOTE: THIS IS POTENTIALLY DANGEROUS! In my workflow, it is meant to catch branches that have
+	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have
 	# been merged and deleted via GitHub pull requests.
 	delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
 

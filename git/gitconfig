@@ -1,4 +1,4 @@
-# For all these settings to work as expected, you should be using at least Git 2.28.
+# For all these settings to work as expected, you should be using at least Git 2.37.
 # Earlier versions had different defaults and this config does not account for them.
 
 [user]
@@ -54,6 +54,8 @@
 
 [push]
 	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.
+	# This config requires Git 2.37 or higher. If using an older version of Git, consider aliasing
+	# `git push` to `git push -u` instead.
 	autoSetupRemote = true
 
 [rerere]

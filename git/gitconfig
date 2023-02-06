@@ -31,8 +31,8 @@
 	# variables to prevent the pager from word-wrapping, and instead you can use the left/right
 	# arrow keys to scroll horizontally. See `man less` for more info.
 	#
-	# - `git dab` ("branch") shows the current branch only (basically a fancy/concise `git log`)
-	# - `git dam` ("main") shows the DAG with only the current branch and main.
+	# - `git dab` (B for branch) shows the current branch only (basically a fancy/concise `git log`)
+	# - `git dam` (M for main) shows the DAG with only the current branch and main.
 	# - `git dag` shows the DAG of the entire repo with all local branches, and main.
 	# - Use `git dag --all` to show everything, including the remote branches.
 	dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
@@ -63,7 +63,7 @@
 	autocrlf = input
 
 [pull]
-	# `git pull --rebase` always. Helps keep commit history linear.
+	# Always `git pull --rebase`. Helps keep commit history linear.
 	rebase = true
 
 [rebase]

@@ -70,9 +70,6 @@
 	# Does the magic mentioned in `git cs`.
 	autosquash = true
 
-[apply]
-	whitespace = nowarn
-
 # Use Beyond Compare (paid diff/merge GUI) when running `git difftool`.
 [diff]
 	tool = bc3

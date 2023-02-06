@@ -1,47 +1,81 @@
+# For all these settings to work as expected, you should be using at least Git 2.28.
+# Earlier versions had different defaults and this config does not account for them.
+
 [user]
+	# Use the same email address as you have on your GitHub account,
+	# otherwise GitHub won't know your commits are from you.
 	name = Andrew Brandon
 	email = drbr@users.noreply.github.com
 
 [init]
+	# Since Git 2.28, we can choose a name for the default branch on new repos.
 	defaultBranch = main
 
 [alias]
-	bb = branch -vv
 	st = status
-	ci = commit
-	cs = commit --fixup=HEAD
 	co = checkout
-	dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
-	dag = dab --all
-	dam = dab HEAD origin/HEAD
+
+	# Pull, and also delete remote-tracking branches that no longer exist.
 	pp = pull --prune
-	delete-old-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
-	rr = !git checkout main && git pull --prune && git delete-old-branches
+
+	# List all branches with their upstream tracking info.
+	bb = branch -vv
+
+	# Commit with the magic message that causes `git rebase -i` to mark that commit as `fixup`
+	cs = commit --fixup=HEAD
+
+	# Show the DAG of commits (directed acyclic graph) in various ways.
+	# You can add more `git log` arguments (e.g. more refs to log) after any of these commands.
+	#
+	# Word wrapping on large graphs ruins the ASCII art, so this command adds some environment
+	# variables to prevent the pager from word-wrapping, and instead you can use the left/right
+	# arrow keys to scroll horizontally. See `man less` for more info.
+	#
+	# - `git dab` ("branch") shows the current branch only (basically a fancy/concise `git log`)
+	# - `git dam` ("main") shows the DAG with only the current branch and main.
+	# - `git dag` shows the DAG of the entire repo with all local branches, and main.
+	# - Use `git dag --all` to show everything, including the remote branches.
+	dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+	dam = dab HEAD origin/HEAD
+	dag = dam --branches
+
+	# Force-delete local branches whose remote tracking branches no longer exist.
+	# NOTE: THIS IS POTENTIALLY DANGEROUS! In my workflow, it is meant to catch branches that have
+	# been merged and deleted via GitHub pull requests.
+	delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+
+	# Switch to main, pull the latest, remove deleted branches on local and remote.
+	rr = !git checkout main && git pull --prune && git delete-old-local-branches
 
 [push]
-	default = simple
+	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.
 	autoSetupRemote = true
 
 [rerere]
+	# "Reuse recorded resolution" of conflicted merges. Makes rebases less painful.
 	enabled = true
 
 [core]
+	# Default options for `less` so colors can happen, and other nice things.
 	pager = less -FMRiX
-	whitespace = -trailing-space
+
+	# Deal with cross-platform line endings the POSIX way. If you're using Windows, set this to "true" instead.
 	autocrlf = input
 
 [pull]
+	# `git pull --rebase` always. Helps keep commit history linear.
 	rebase = true
 
 [rebase]
+	# Does the magic mentioned in `git cs`.
 	autosquash = true
 
 [apply]
 	whitespace = nowarn
 
+# Use Beyond Compare (paid diff/merge GUI) when running `git difftool`.
 [diff]
 	tool = bc3
-
 [difftool "bc3"]
 	trustExitCode = true
 
@@ -51,4 +85,5 @@
 	smudge = git-lfs smudge -- %f
 
 [credential]
+	# Use the Mac keychain to store credentials to remote repos.
 	helper = osxkeychain

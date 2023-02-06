@@ -1,49 +1,49 @@
 [user]
-    name = Andrew Brandon
-    email = drbr@users.noreply.github.com
+	name = Andrew Brandon
+	email = drbr@users.noreply.github.com
 
 [init]
-    defaultBranch = main
+	defaultBranch = main
 
 [alias]
-    bb = branch -vv
-    st = status
-    ci = commit
-    cs = commit --fixup=HEAD
-    co = checkout
-    dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
-    dag = dab --all
-    dam = dab HEAD origin/HEAD
-    pp = pull --prune
-    delete-old-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
-    rr = !git checkout main && git pull --prune && git delete-old-branches
+	bb = branch -vv
+	st = status
+	ci = commit
+	cs = commit --fixup=HEAD
+	co = checkout
+	dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+	dag = dab --all
+	dam = dab HEAD origin/HEAD
+	pp = pull --prune
+	delete-old-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+	rr = !git checkout main && git pull --prune && git delete-old-branches
 
 [push]
-    default = simple
-    autoSetupRemote = true
+	default = simple
+	autoSetupRemote = true
 
 [rerere]
-    enabled = true
+	enabled = true
 
 [core]
-    pager = less -FMRiX
-    whitespace = -trailing-space
-    autocrlf = input
+	pager = less -FMRiX
+	whitespace = -trailing-space
+	autocrlf = input
 
 [pull]
-    rebase = true
+	rebase = true
 
 [rebase]
-    autosquash = true
+	autosquash = true
 
 [apply]
-    whitespace = nowarn
+	whitespace = nowarn
 
 [diff]
-    tool = bc3
+	tool = bc3
 
 [difftool "bc3"]
-    trustExitCode = true
+	trustExitCode = true
 
 [filter "lfs"]
 	required = true

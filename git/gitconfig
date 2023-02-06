@@ -44,9 +44,20 @@
 	# been merged and deleted via GitHub pull requests.
 	delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
 
-	# Figure out the default branch from origin/HEAD, and if there isn't an origin/HEAD, then use
-	# the default branch config. And if there isn't one of those, then use Git's default of `master`.
-	# If the origin default branch has changed, run `git remote set-head origin --auto` to update the local ref.
+	# Return the name of the default branch, so you can switch to it in commands like `git rr`.
+	# This is rather hacky so maybe there's an easier way...
+	#
+	# It first tries the branch pointed to by `origin/HEAD`, and if there isn't an origin/HEAD, then it
+	# uses the global default branch config. And if there isn't one of those, then it uses Git's default
+	# of `master`. (there will always be a default config in this file, but if you copy-paste this for
+	# your own use, then there may not be)
+	#
+	# If this command is giving the wrong branch name:
+	#   - If the origin default branch has changed, run `git remote set-head origin --auto`
+	#     to update the local ref.
+	#   - If you have a repo without a remote that uses a different default branch than the one
+	#     specified as the global default (e.g. your older repo has "master" but the global default
+	#     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
 	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<"$branch" || git config init.defaultBranch || echo master
 
 	# Switch to the default branch, pull the latest, and remove deleted remote branches

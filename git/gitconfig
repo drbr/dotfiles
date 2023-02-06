@@ -44,8 +44,13 @@
 	# been merged and deleted via GitHub pull requests.
 	delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
 
-	# Switch to main, pull the latest, remove deleted branches on local and remote.
-	rr = !git checkout main && git pull --prune && git delete-old-local-branches
+	# Figure out the default branch from origin/HEAD, and if there isn't an origin/HEAD, then use
+	# the default branch config. And if there isn't one of those, then use Git's default of `master`.
+	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<"$branch" || git config init.defaultBranch || echo master
+
+	# Switch to the default branch, pull the latest, and remove deleted remote branches
+	# and the local branches that tracked them.
+	rr = !git checkout $(git default-branch) && git pull --prune && git delete-old-local-branches
 
 [push]
 	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.

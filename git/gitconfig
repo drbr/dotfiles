@@ -11,11 +11,12 @@
     ci = commit
     cs = commit --fixup=HEAD
     co = checkout
-    dab = log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+    dab = !LESS=-S git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
     dag = dab --all
     dam = dab HEAD origin/HEAD
     pp = pull --prune
-    rr = !git checkout main && git pull --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+    delete-old-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+    rr = !git checkout main && git pull --prune && git delete-old-branches
 
 [push]
     default = current

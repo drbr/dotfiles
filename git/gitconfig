@@ -11,7 +11,7 @@
     ci = commit
     cs = commit --fixup=HEAD
     co = checkout
-    dab = !LESS=-S git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+    dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
     dag = dab --all
     dam = dab HEAD origin/HEAD
     pp = pull --prune

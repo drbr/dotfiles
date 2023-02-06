@@ -19,7 +19,8 @@
     rr = !git checkout main && git pull --prune && git delete-old-branches
 
 [push]
-    default = current
+    default = simple
+    autoSetupRemote = true
 
 [rerere]
     enabled = true

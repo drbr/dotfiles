@@ -46,6 +46,7 @@
 
 	# Figure out the default branch from origin/HEAD, and if there isn't an origin/HEAD, then use
 	# the default branch config. And if there isn't one of those, then use Git's default of `master`.
+	# If the origin default branch has changed, run `git remote set-head origin --auto` to update the local ref.
 	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<"$branch" || git config init.defaultBranch || echo master
 
 	# Switch to the default branch, pull the latest, and remove deleted remote branches

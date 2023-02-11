@@ -64,10 +64,6 @@
 	# and the local branches that tracked them.
 	rr = !git checkout $(git default-branch) && git pull --prune && git delete-old-local-branches
 
-	# Get back to a clean working tree by reverting all unstaged changes and deleting untracked files.
-	# THIS COMMAND IS DESTRUCTIVE!! A safer alternative is `git stash -u`.
-	clobber = !git clean -df && git restore $(git rev-parse --show-toplevel)
-
 [push]
 	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.
 	# This config requires Git 2.37 or higher. If using an older version of Git, consider aliasing

@@ -15,6 +15,16 @@
 	st = status
 	co = checkout
 
+	# Like `git checkout`, but works with a single argument only (e.g. switch branches).
+	# If we're already on that branch, it'll be a no-op. Use this in scripts to help prevent duplicate
+	# entries on the branch history when checking out the current branch. This will keep
+	# `git checkout -` working nicely.
+	#
+	# Not assigning this to `git co` because the parameter doesn't support tab-completion, so it would
+	# hinder interactive use. But, with an informative shell prompt, we probably wouldn't try to
+	# check out the current branch anyway.
+	switch-or-noop = !"[[ "$(git branch --show-current)" != "$1" ]] && git checkout "$1" || true"
+
 	# Pull, and also delete remote-tracking branches that no longer exist.
 	pp = pull --prune
 
@@ -59,11 +69,10 @@
 	#     specified as the global default (e.g. your older repo has "master" but the global default
 	#     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
 	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<"$branch" || git config init.defaultBranch || echo master
-	switch-to-default-branch = !sh -c '[[ "$(git branch --show-current)" != "$(git default-branch)" ]] && git checkout $(git default-branch) || true'
 
 	# Switch to the default branch, pull the latest, and remove deleted remote branches
 	# and the local branches that tracked them.
-	rr = !git switch-to-default-branch && git pull --prune && git delete-old-local-branches
+	rr = !git switch-or-noop $(git default-branch) && git pull --prune && git delete-old-local-branches
 
 [push]
 	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.

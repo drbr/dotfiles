@@ -41,13 +41,14 @@
 	# variables to prevent the pager from word-wrapping, and instead you can use the left/right
 	# arrow keys to scroll horizontally. See `man less` for more info.
 	#
-	# - `git dab` (B for branch) shows the current branch only (basically a fancy/concise `git log`)
-	# - `git dam` (M for main) shows the DAG with only the current branch and main.
+	# - `git graph` shows the current branch only (basically a fancy/concise `git log`).
+	#   I don't use this by itself.
+	# - `git dab` (B for branch) shows the DAG with only the current branch and main.
 	# - `git dag` shows the DAG of the entire repo with all local branches, tags, and main.
 	# - Use `git dag --all` to show everything, including the remote branches.
-	dab = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
-	dam = dab HEAD origin/HEAD
-	dag = dam --branches --tags
+	graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+	dab = graph HEAD origin/HEAD
+	dag = dab --branches --tags
 
 	# Force-delete local branches whose remote tracking branches no longer exist.
 	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have

@@ -110,9 +110,9 @@
 # The defaults are fine, but I like these better with my terminal color scheme.
 [color "decorate"]
 	HEAD = magenta bold
-	branch = red
+	branch = red bold
 	remoteBranch = green bold
-	tag = blue
+	tag = cyan
 	stash = magenta
 
 [filter "lfs"]

@@ -106,6 +106,15 @@
 [difftool "bc3"]
 	trustExitCode = true
 
+# Custom colors for differnt ref types when running `git log`.
+# The defaults are fine, but I like these better with my terminal color scheme.
+[color "decorate"]
+	HEAD = magenta bold
+	branch = red
+	remoteBranch = green bold
+	tag = blue
+	stash = magenta
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

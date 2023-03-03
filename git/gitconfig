@@ -128,9 +128,6 @@
 [credential]
 	# Use the Mac keychain to store credentials to remote repos.
 	helper = osxkeychain
-[init]
-	defaultBranch = main
-	templateDir = /Users/abrandon/.git-template
 
 [url "git@github.com:"]
 	insteadOf = https://github.com/

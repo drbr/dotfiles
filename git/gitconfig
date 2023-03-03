@@ -4,8 +4,8 @@
 [user]
 	# Use the same email address as you have on your GitHub account,
 	# otherwise GitHub won't know your commits are from you.
-    name = Andrew Brandon
-    email = andrew.brandon@snowflake.com
+	name = Andrew Brandon
+	email = drbr@users.noreply.github.com
 
 [init]
 	# Since Git 2.28, we can choose a name for the default branch on new repos.

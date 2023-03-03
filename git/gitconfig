@@ -50,6 +50,9 @@
 	dab = graph HEAD origin/HEAD
 	dag = dab --branches --tags
 
+	# git-log all the current user's commits only, from the refs given as additional arguments.
+	mine = !git graph --author \"$(git config user.name)\"
+
 	# Force-delete local branches whose remote tracking branches no longer exist.
 	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have
 	# been merged and deleted via GitHub pull requests.

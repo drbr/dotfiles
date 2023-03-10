@@ -37,8 +37,8 @@
 	# Pull, and also delete remote-tracking branches that no longer exist.
 	pp = pull --prune
 
-	# List all branches with their upstream tracking info.
-	bb = branch -vv
+	# List all branches with their upstream tracking info, sorted by age.
+	bb = branch -vv --sort=-committerdate
 
 	# Commit with the magic message that causes `git rebase -i` to mark that commit as `fixup`
 	cs = commit --fixup=HEAD

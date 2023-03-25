@@ -90,7 +90,7 @@
 
 	# Switch to the default branch, pull the latest, and remove deleted remote branches
 	# and the local branches that tracked them.
-	rr = !git switch-or-noop $(git default-branch) && git pull --prune && git delete-old-local-branches
+	rr = !git switch-or-noop $(git default-branch) && git pp && git delete-old-local-branches
 
 [core]
 	# Default options for `less` so colors can happen, and other nice things.

@@ -59,6 +59,10 @@
 	graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
 	dab = graph HEAD origin/HEAD
 	dag = dab --branches --tags
+	
+	# Shows the diff between the nearest common ancestor of (HEAD, main) and HEAD.
+	# This is the same diff that GitHub uses for pull requests.
+	diffpr = !git diff $(git default-branch)...HEAD 
 
 	# git-log all the current user's commits only, from the refs given as additional arguments.
 	mine = !git graph --author \"$(git config user.name)\"

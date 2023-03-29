@@ -63,9 +63,9 @@
 	# git-log all the current user's commits only, from the refs given as additional arguments.
 	mine = !git graph --author \"$(git config user.name)\"
 
-	# Shows the diff between the nearest common ancestor of (HEAD, main) and HEAD.
-	# This is the same diff that GitHub uses for pull requests.
-	diffpr = !git diff $(git default-branch)...HEAD 
+	# Show a diff equivalent to the one that GitHub uses for pull requests. Uses a 3-way merge base so
+	# that it will work correctly if either `main` or `origin/main` has been merged into the branch.
+	diffpr = !defaultBranch=$(git default-branch) && git diff $(git merge-base HEAD $defaultBranch origin/$defaultBranch) HEAD
 
 	# Force-delete local branches whose remote tracking branches no longer exist.
 	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have

@@ -63,9 +63,11 @@
 	# git-log all the current user's commits only, from the refs given as additional arguments.
 	mine = !git graph --author \"$(git config user.name)\"
 
-	# Show a diff equivalent to the one that GitHub uses for pull requests. Uses a 3-way merge base so
-	# that it will work correctly if either `main` or `origin/main` has been merged into the branch.
-	diffpr = !defaultBranch=$(git default-branch) && git diff $(git merge-base HEAD $defaultBranch origin/$defaultBranch) HEAD
+	# Show all the changes made on the given branch (or HEAD, if the first argument is blank) since it
+	# diverged from the default branch. This is the same diff that GitHub uses for pull requests. Uses
+	# a 3-way merge base so that it will work correctly if either `main` or `origin/main` has been
+	# merged into the branch.
+	diffpr = !defaultBranch=$(git default-branch) branchToDiff=${1:-HEAD} && git diff $(git merge-base $branchToDiff $defaultBranch origin/$defaultBranch) $branchToDiff
 
 	# Force-delete local branches whose remote tracking branches no longer exist.
 	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have

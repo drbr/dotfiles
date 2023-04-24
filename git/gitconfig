@@ -83,12 +83,16 @@
 	# your own use, then there may not be)
 	#
 	# If this command is giving the wrong branch name:
-	#   - If the origin default branch has changed, run `git remote set-head origin --auto`
-	#     to update the local ref.
+	#   - If the origin default branch has changed or has never been set up (e.g. the local repo was
+	#     not cloned), run `git set-default-branch` to update the local ref.
 	#   - If you have a repo without a remote that uses a different default branch than the one
 	#     specified as the global default (e.g. your older repo has "master" but the global default
 	#     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
 	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<$branch || git config init.defaultBranch || echo master
+
+	# Queries the remote to find out the value of its HEAD, and sets the local `origin/HEAD` ref
+	# to the same.
+	set-default-branch = remote set-head origin --auto
 
 	# Switch to the default branch, pull the latest, and remove deleted remote branches
 	# and the local branches that tracked them.

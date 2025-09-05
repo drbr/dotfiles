@@ -135,6 +135,12 @@ title() {
     echo -ne "\033]0;"$*"\007"
 }
 
+# Assign the current merge base to a variable, so we can easily do things like `git checkout $MB`
+git_merge_base() {
+    MB=$(git merge-base HEAD $(git default-branch))
+}
+precmd_functions+='git_merge_base'
+
 autoload -U zutil
 autoload -U compinit
 autoload -U complist

@@ -37,6 +37,9 @@
 	# Pull, and also delete remote-tracking branches that no longer exist.
 	pp = pull --prune
 
+  # Shorthand for "push" because muscle memory (we have a custom "push" script at work) 
+  psh = push
+
 	# List all branches with their upstream tracking info, sorted by age.
 	bb = branch -vv --sort=-committerdate
 

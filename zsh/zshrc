@@ -137,7 +137,9 @@ title() {
 
 # Assign the current merge base to a variable, so we can easily do things like `git checkout $MB`
 git_merge_base() {
-    MB=$(git merge-base HEAD $(git default-branch))
+    if git rev-parse &>/dev/null; then
+        MB=$(git merge-base HEAD $(git default-branch))
+    fi
 }
 precmd_functions+='git_merge_base'
 

@@ -73,6 +73,10 @@ endif
 syntax enable
 
 "Set color scheme
+"The "patched" iTerm version of Solarized Dark needs a transparent background,
+"otherwise it'll use a light gray background and look really bad
+"
+let g:solarized_termtrans=1
 set background=dark
 colorscheme solarized
 

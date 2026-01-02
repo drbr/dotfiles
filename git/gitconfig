@@ -37,7 +37,7 @@
 	# Pull, and also delete remote-tracking branches that no longer exist.
 	pp = pull --prune
 
-  # Shorthand for "push" because muscle memory (we have a custom "push" script at work) 
+  # Shorthand for "push" because muscle memory (we have a custom "push" script at work)
   psh = push
 
 	# List all branches with their upstream tracking info, sorted by age.
@@ -102,11 +102,13 @@
 	rr = !git switch-or-noop $(git default-branch) && git pp && git delete-old-local-branches
 
 [core]
-	# Default options for `less` so colors can happen, and other nice things.
-	pager = less -FMRiX
+	pager = delta --navigate --side-by-side --pager \"less -FMRiX\" --syntax-theme \"TwoDark\"
 
 	# Deal with cross-platform line endings the POSIX way. If you're using Windows, set this to "true" instead.
 	autocrlf = input
+
+[interactive]
+    diffFilter = delta --color-only --navigate --side-by-side
 
 [pull]
 	# Always `git pull --rebase`. Helps keep commit history linear.
@@ -130,8 +132,15 @@
 [diff]
 	tool = bc3
 
+[merge]
+    conflictStyle = zdiff3
+
 [difftool "bc3"]
 	trustExitCode = true
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
 
 [filter "lfs"]
 	required = true

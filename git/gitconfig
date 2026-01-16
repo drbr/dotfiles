@@ -67,8 +67,8 @@
   # diverged from the default branch. This is the same diff that GitHub uses for pull requests. Uses
   # a 3-way merge base so that it will work correctly if either `main` or `origin/main` has been
   # merged into the branch.
-  diffpr = !branchToDiff=${1:-HEAD} git diff $(git merge-base-in-script $branchToDiff) $branchToDiff
-  statpr = !branchToDiff=${1:-HEAD} git diff --stat $(git merge-base-in-script $branchToDiff) $branchToDiff
+  diffpr = "!f() { branchToDiff=${1:-HEAD} && git diff $(git merge-base-in-script $branchToDiff) $branchToDiff; }; f"
+  statpr = "!f() { branchToDiff=${1:-HEAD} && git diff --stat $(git merge-base-in-script $branchToDiff) $branchToDiff; }; f"
 
   # Switch to the default branch, pull the latest, and remove deleted remote branches
   # and the local branches that tracked them.

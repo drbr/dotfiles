@@ -127,7 +127,7 @@
   # Finds the merge base of the current branch (or specified branch) and the default branch, which
   # should be identical to the merge base of this branch if it were in a pull request.
   # This is meant to be composed in scripts, and so named because `git merge-base` is already taken.
-  merge-base-in-script = !bash -c 'branchToDiff=${1:-HEAD} && git merge-base $branchToDiff $(git remote-default-branch)' {}
+  merge-base-in-script = "!f() { branchToDiff=${1:-HEAD} && git merge-base $branchToDiff $(git remote-default-branch); }; f"
 
 [core]
   # Default options for `less` so colors can happen, and other nice things.

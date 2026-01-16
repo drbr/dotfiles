@@ -21,6 +21,9 @@ path=(
     $path
 )
 
+# Make homebrew's stuff come first
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 typeset -ga precmd_functions
 typeset -ga preexec_functions
 
@@ -136,11 +139,11 @@ title() {
     echo -ne "\033]0;"$*"\007"
 }
 
-# Assign the current merge base to a variable, so we can easily do things like `git checkout $MB`
+# Assign the current merge base to a tag, so we can easily do things like
+# `git checkout merge-base` or see it in the DAG
 git_merge_base() {
-    if git rev-parse &>/dev/null; then
-        MB=$(git merge-base HEAD $(git default-branch))
-    fi
+    mergeBase=$(git merge-base-in-script) 2>/dev/null
+    git tag -f merge-base $mergeBase &>/dev/null
 }
 precmd_functions+='git_merge_base'
 

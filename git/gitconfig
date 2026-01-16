@@ -8,139 +8,174 @@
 	email = drbr@users.noreply.github.com
 
 [init]
-	# Since Git 2.28, we can choose a name for the default branch on new repos.
-	defaultBranch = main
+  # Since Git 2.28, we can choose a name for the default branch on new repos.
+  defaultBranch = main
 
-# Custom colors for differnt ref types when running `git log` (see aliases below).
-# The defaults are fine, but I like these better with my terminal color scheme.
 [color "decorate"]
-	HEAD = magenta bold
-	branch = red bold
-	remoteBranch = green bold
-	tag = cyan
-	stash = magenta
+  # Custom colors for different ref types when running `git log` (see aliases below).
+  # The defaults are fine, but I like these better with my terminal color scheme.
+  HEAD = magenta bold
+  branch = red bold
+  remoteBranch = green bold
+  tag = cyan
+  stash = magenta
 
 [alias]
-	st = status
-	co = checkout
+[alias]
 
-	# Like `git checkout`, but works with a single argument only (e.g. switch branches).
-	# If we're already on that branch, it'll be a no-op. Use this in scripts to help prevent duplicate
-	# entries on the branch history when checking out the current branch. This will keep
-	# `git checkout -` working nicely.
-	#
-	# Not assigning this to `git co` because the parameter doesn't support tab-completion, so it would
-	# hinder interactive use. But, with an informative shell prompt, we probably wouldn't try to
-	# check out the current branch anyway.
-	switch-or-noop = ![[ \"$(git branch --show-current)\" != \"$1\" ]] && git checkout $1 || true
+  # ------------------
+  # PORCELAIN COMMANDS
+  # ------------------
 
-	# Pull, and also delete remote-tracking branches that no longer exist.
-	pp = pull --prune
+  st = status
+  co = checkout
+
+  # Pull, and also delete remote-tracking branches that no longer exist.
+  pp = !git pull --prune && git remote prune origin
 
   # Shorthand for "push" because muscle memory (we have a custom "push" script at work)
   psh = push
 
-	# List all branches with their upstream tracking info, sorted by age.
-	bb = branch -vv --sort=-committerdate
+  # List all branches with their upstream tracking info, sorted by age.
+  bb = branch -vv --sort=-committerdate
 
-	# Commit with the magic message that causes `git rebase -i` to mark that commit as `fixup`
-	cs = commit --fixup=HEAD
+  # Commit with the magic message that causes `git rebase -i` to mark that commit as `fixup`
+  cs = commit --fixup=HEAD
 
-	# Show the DAG of commits (directed acyclic graph) in various ways.
-	# You can add more `git log` arguments (e.g. more refs to log) after any of these commands.
-	#
-	# Word wrapping on large graphs ruins the ASCII art, so this command adds some environment
-	# variables to prevent the pager from word-wrapping, and instead you can use the left/right
-	# arrow keys to scroll horizontally. See `man less` for more info. This also assumes that
-	# the core.pager config is set up with the flags specified below.
-	#
-	# - `git graph` shows the current branch only (basically a fancy/concise `git log`).
-	#   I don't use this by itself.
-	# - `git dab` (B for branch) shows the DAG with only the current branch and main.
-	# - `git dag` shows the DAG of the entire repo with all local branches, tags, and main.
-	# - Use `git dag --all` to show everything, including the remote branches.
-	graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
-	dab = graph HEAD origin/HEAD
-	dag = dab --branches --tags
+  # Show the DAG of commits (directed acyclic graph) in various ways.
+  # You can add more `git log` arguments (e.g. more refs to log) after any of these commands.
+  #
+  # Word wrapping on large graphs ruins the ASCII art, so this command adds some environment
+  # variables to prevent the pager from word-wrapping, and instead you can use the left/right
+  # arrow keys to scroll horizontally. See `man less` for more info. This also assumes that
+  # the core.pager config is set up with the flags specified below.
+  #
+  # - `git graph` shows the current branch only (basically a fancy/concise `git log`).
+  #   I don't use this by itself.
+  # - `git dab` (B for branch) shows the DAG with only the current branch and local main.
+  # - `git dag` shows the DAG of the entire repo with all local branches, tags, and local main.
+  # - `git dagr` is the same as `git dag` but also with remote main.
+  # - Use `git dag --all` to show everything, including the remote branches.
+  graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+  dab = !git graph HEAD
+  dag = !git dab --branches --tags
+  dagr = !git dab $(git remote-default-branch) --branches --tags
 
-	# git-log all the current user's commits only, from the refs given as additional arguments.
-	mine = !git graph --author \"$(git config user.name)\"
+  # git-log all the current user's commits only, from the refs given as additional arguments.
+  mine = !git graph --author \"$(git config user.name)\"
 
-	# Show all the changes made on the given branch (or HEAD, if the first argument is blank) since it
-	# diverged from the default branch. This is the same diff that GitHub uses for pull requests. Uses
-	# a 3-way merge base so that it will work correctly if either `main` or `origin/main` has been
-	# merged into the branch.
-	diffpr = !defaultBranch=$(git default-branch) branchToDiff=${1:-HEAD} && git diff $(git merge-base $branchToDiff $defaultBranch origin/$defaultBranch) $branchToDiff
+  # Show all the changes made on the given branch (or HEAD, if the first argument is blank) since it
+  # diverged from the default branch. This is the same diff that GitHub uses for pull requests. Uses
+  # a 3-way merge base so that it will work correctly if either `main` or `origin/main` has been
+  # merged into the branch.
+  diffpr = !branchToDiff=${1:-HEAD} git diff $(git merge-base-in-script $branchToDiff) $branchToDiff
+  statpr = !branchToDiff=${1:-HEAD} git diff --stat $(git merge-base-in-script $branchToDiff) $branchToDiff
 
-	# Force-delete local branches whose remote tracking branches no longer exist.
-	# NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have
-	# been merged and deleted via GitHub pull requests.
-	delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+  # Switch to the default branch, pull the latest, and remove deleted remote branches
+  # and the local branches that tracked them.
+  rr = !git switch-or-noop $(git default-branch) && git pp && git delete-old-local-branches
 
-	# Return the name of the default branch, so you can switch to it in commands like `git rr`.
-	# This is rather hacky so maybe there's an easier way...
-	#
-	# It first tries the branch pointed to by `origin/HEAD`, and if there isn't an origin/HEAD, then it
-	# uses the global default branch config. And if there isn't one of those, then it uses Git's default
-	# of `master`. (there will always be a default config in this file, but if you copy-paste this for
-	# your own use, then there may not be)
-	#
-	# If this command is giving the wrong branch name:
-	#   - If the origin default branch has changed or has never been set up (e.g. the local repo was
-	#     not cloned), run `git set-default-branch` to update the local ref.
-	#   - If you have a repo without a remote that uses a different default branch than the one
-	#     specified as the global default (e.g. your older repo has "master" but the global default
-	#     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
-	default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<$branch || git config init.defaultBranch || echo master
+  # The syntax `git rebase <upstream> <branch>` allows you to rebase branches you're not currently
+  # on, which can save lots of time checking out if that branch is old. This alias facilitates the
+  # common use case of bringing an old branch back up to the current main.
+  fresh = !git rebase $(git remote-default-branch)
 
-	# Queries the remote to find out the value of its HEAD, and sets the local `origin/HEAD` ref
-	# to the same.
-	set-default-branch = remote set-head origin --auto
+  # Queries the remote to find out the value of its HEAD, and sets the local `origin/HEAD` ref
+  # to the same.
+  set-default-branch = remote set-head origin --auto
 
-	# Switch to the default branch, pull the latest, and remove deleted remote branches
-	# and the local branches that tracked them.
-	rr = !git switch-or-noop $(git default-branch) && git pp && git delete-old-local-branches
+
+  # -----------------
+  # PLUMBING COMMANDS
+  # -----------------
+
+  # Like `git checkout`, but works with a single argument only (e.g. switch branches).
+  # If we're already on that branch, it'll be a no-op. Use this in scripts to help prevent duplicate
+  # entries on the branch history when checking out the current branch. This will keep
+  # `git checkout -` working nicely.
+  #
+  # Not assigning this to `git co` because the parameter doesn't support tab-completion, so it would
+  # hinder interactive use. But, with an informative shell prompt, we probably wouldn't try to
+  # check out the current branch anyway.
+  switch-or-noop = !bash -c '[[ \"$(git branch --show-current)\" != \"$1\" ]] && git checkout $1 || true' {}
+
+  # Force-delete local branches whose remote tracking branches no longer exist.
+  # NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have
+  # been merged and deleted via GitHub pull requests.
+  delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+
+  # Return the name of the default branch, so you can switch to it in commands like `git rr`.
+  # This is rather hacky so maybe there's an easier way...
+  #
+  # It first tries the branch pointed to by `origin/HEAD`, and if there isn't an origin/HEAD, then it
+  # uses the global default branch config. And if there isn't one of those, then it uses Git's default
+  # of `master`. (there will always be a default config in this file, but if you copy-paste this for
+  # your own use, then there may not be)
+  #
+  # If this command is giving the wrong branch name:
+  #   - If the origin default branch has changed or has never been set up (e.g. the local repo was
+  #     not cloned), run `git set-default-branch` to update the local ref.
+  #   - If you have a repo without a remote that uses a different default branch than the one
+  #     specified as the global default (e.g. your older repo has "master" but the global default
+  #     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
+  default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<$branch || git config init.defaultBranch || echo master
+
+  # Gets the name of the remote default branch (e.g. origin/main) by looking at the upstream
+  # tracking branch of the default. Do this dynamically instead of hardcoding "origin" in case the
+  # remote is named something else.
+  remote-default-branch = !git rev-parse --abbrev-ref --symbolic-full-name $(git default-branch)@{u}
+
+  # Finds the merge base of the current branch (or specified branch) and the default branch, which
+  # should be identical to the merge base of this branch if it were in a pull request.
+  # This is meant to be composed in scripts, and so named because `git merge-base` is already taken.
+  merge-base-in-script = !bash -c 'branchToDiff=${1:-HEAD} && git merge-base $branchToDiff $(git remote-default-branch)' {}
 
 [core]
-	pager = delta --navigate --side-by-side --pager \"less -FMRiX\" --syntax-theme \"TwoDark\"
+  # Default options for `less` so colors can happen, and other nice things.
+  pager = diff-so-fancy | less --tabs=4 -FMRiX
 
-	# Deal with cross-platform line endings the POSIX way. If you're using Windows, set this to "true" instead.
-	autocrlf = input
+  # Deal with cross-platform line endings the POSIX way. If you're using Windows, set this to "true" instead.
+  autocrlf = input
 
 [interactive]
-    diffFilter = delta --color-only --navigate --side-by-side
+  diffFilter = diff-so-fancy --patch
+  # diffFilter = delta --color-only --navigate --side-by-side
 
-[pull]
-	# Always `git pull --rebase`. Helps keep commit history linear.
-	rebase = true
-
-[push]
-	# Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.
-	# This config requires Git 2.37 or higher. If using an older version of Git, consider aliasing
-	# `git push` to `git push -u` instead.
-	autoSetupRemote = true
-
-[rebase]
-	# Does the magic mentioned in `git cs`.
-	autosquash = true
-
-[rerere]
-	# "Reuse recorded resolution" of conflicted merges. Makes rebases less painful.
-	enabled = true
-
-# Use Beyond Compare (paid diff/merge GUI) when running `git difftool`.
-[diff]
-	tool = bc3
-
-[merge]
-    conflictStyle = zdiff3
-
-[difftool "bc3"]
-	trustExitCode = true
+[diff-so-fancy]
+  markEmptyLines = false
 
 [delta]
-    navigate = true  # use n and N to move between diff sections
-    dark = true      # or light = true, or omit for auto-detection
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or light = true, or omit for auto-detection
+
+[pull]
+  # Always `git pull --rebase`. Helps keep commit history linear.
+  rebase = true
+
+[push]
+  # Automatically set the upstream tracking branch if it's not set already, as if you ran `git push -u`.
+  # This config requires Git 2.37 or higher. If using an older version of Git, consider aliasing
+  # `git push` to `git push -u` instead.
+  autoSetupRemote = true
+
+[rebase]
+  # Does the magic mentioned in `git cs`.
+  autosquash = true
+
+[rerere]
+  # "Reuse recorded resolution" of conflicted merges. Makes rebases less painful.
+  enabled = true
+
+[diff]
+  # Use Beyond Compare (paid diff/merge GUI) when running `git difftool`.
+	tool = bc3
+	ignore-all-space = true
+
+[difftool "bc3"]
+  trustExitCode = true
+
+[merge]
+  conflictStyle = zdiff3
 
 [filter "lfs"]
 	required = true

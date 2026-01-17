@@ -117,7 +117,7 @@
   #   - If you have a repo without a remote that uses a different default branch than the one
   #     specified as the global default (e.g. your older repo has "master" but the global default
   #     is "main"), add a repo-specific config: `git config init.defaultBranch master`.
-  default-branch = !branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed 's|^origin/||' <<<$branch || git config init.defaultBranch || echo master
+  default-branch = !bash -c 'branch=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null) && sed "s@^origin/@@" <<<$branch || git config init.defaultBranch || echo master' {}
 
   # Gets the name of the remote default branch (e.g. origin/main) by looking at the upstream
   # tracking branch of the default. Do this dynamically instead of hardcoding "origin" in case the

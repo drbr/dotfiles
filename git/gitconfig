@@ -101,7 +101,7 @@
   # Force-delete local branches whose remote tracking branches no longer exist.
   # NOTE: THIS IS POTENTIALLY DESTRUCTIVE! In my workflow, it is meant to catch branches that have
   # been merged and deleted via GitHub pull requests.
-  delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+  delete-old-local-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
 
   # Return the name of the default branch, so you can switch to it in commands like `git rr`.
   # This is rather hacky so maybe there's an easier way...

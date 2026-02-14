@@ -64,11 +64,10 @@
   mine = !git graph --author \"$(git config user.name)\"
 
   # Show all the changes made on the given branch (or HEAD, if the first argument is blank) since it
-  # diverged from the default branch. This is the same diff that GitHub uses for pull requests. Uses
-  # a 3-way merge base so that it will work correctly if either `main` or `origin/main` has been
-  # merged into the branch.
-  diffpr = "!f() { branchToDiff=${1:-HEAD} && git diff $(git merge-base-in-script $branchToDiff) $branchToDiff; }; f"
-  statpr = "!f() { branchToDiff=${1:-HEAD} && git diff --stat $(git merge-base-in-script $branchToDiff) $branchToDiff; }; f"
+  # diverged from the default branch. This is the same diff that GitHub uses for pull requests. By
+  # default, this acts like `git diff` in that it includes unstaged changes. Diff against HEAD or a
+  # different branch (or use --stat) by adding args to the command; e.g. `git diffpr otherBranch --stat`
+  diffpr = !git diff --merge-base $(git remote-default-branch)
 
   # Switch to the default branch, pull the latest, and remove deleted remote branches
   # and the local branches that tracked them.

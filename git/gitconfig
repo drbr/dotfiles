@@ -131,21 +131,20 @@
 
 [core]
   # Default options for `less` so colors can happen, and other nice things.
-  pager = diff-so-fancy | less --tabs=4 -FMRiX
+  # With Delta, less options are controlled by the DELTA_PAGER environment variable (see zshrc)
+  pager = delta
 
   # Deal with cross-platform line endings the POSIX way. If you're using Windows, set this to "true" instead.
   autocrlf = input
 
 [interactive]
-  diffFilter = diff-so-fancy --patch
-  # diffFilter = delta --color-only --navigate --side-by-side
-
-[diff-so-fancy]
-  markEmptyLines = false
+  diffFilter = delta
 
 [delta]
   navigate = true  # use n and N to move between diff sections
   dark = true      # or light = true, or omit for auto-detection
+  side-by-side = true
+  diff-so-fancy = true # I like the diff-so-fancy emulation mode
 
 [pull]
   # Always `git pull --rebase`. Helps keep commit history linear.

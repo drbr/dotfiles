@@ -37,6 +37,7 @@ DIRSTACKSIZE=20                         # number of directories in pushd/popd st
 export EDITOR='vim'
 export VISUAL=$EDITOR
 export PAGER='less -FMRiX'
+export DELTA_PAGER=$PAGER # Have nice things when looking at diffs with delta
 
 # Aliases for common commands
 alias grep='nocorrect grep --color=auto'

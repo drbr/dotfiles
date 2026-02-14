@@ -172,7 +172,8 @@
   trustExitCode = true
 
 [merge]
-  conflictStyle = zdiff3
+  # zdiff3 shows merge bases which is occasionally nice, but usually too much info
+  # conflictStyle = zdiff3
 
 [filter "lfs"]
   required = true

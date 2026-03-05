@@ -55,7 +55,7 @@
   # - `git dag` shows the DAG of the entire repo with all local branches, tags, and local main.
   # - `git dagr` is the same as `git dag` but also with remote main.
   # - Use `git dag --all` to show everything, including the remote branches.
-  graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset'
+  graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%ch) %C(blue)<%an>%Creset'
   dab = !git graph HEAD
   dag = !git dab --branches --tags
   dagr = !git dab $(git remote-default-branch) --branches --tags

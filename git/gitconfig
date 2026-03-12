@@ -145,6 +145,10 @@
   side-by-side = true
   diff-so-fancy = true # I like the diff-so-fancy emulation mode
 
+[fetch]
+  all = true
+  prune = true
+
 [pull]
   # Always `git pull --rebase`. Helps keep commit history linear.
   rebase = true

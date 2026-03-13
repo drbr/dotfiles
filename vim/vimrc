@@ -72,11 +72,16 @@ endif
 "Enable syntax highlighting
 syntax enable
 
-"Set color scheme
-"The "patched" iTerm version of Solarized Dark needs a transparent background,
-"otherwise it'll use a light gray background and look really bad
+"Set color scheme. Theoretically, this is the Solarized plugin, but I'm not convinced this is
+"actually the correct Solarized colors. Whatever they are, they're nice enough so I'm keeping them.
+"They're slightly different than the terminal colors, so that's a nice signal that I'm in vim.
 "
-let g:solarized_termtrans=1
+"For unknown reasons, the background color sometimes doesn't always draw if you scroll or add/remove
+"lines, so if that's happening, we can get around it by setting 'g:solarized_termtrans=1', letting
+"the terminal's native background color show through. This looks okay in some terminal themes (with
+"backgrounds close to black) but not in others (e.g. Selenized). Hopefully you can find a
+"setting that works.
 set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
 colorscheme solarized
-

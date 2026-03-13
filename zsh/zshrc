@@ -145,6 +145,10 @@ title() {
 git_merge_base() {
     mergeBase=$(git merge-base-in-script) 2>/dev/null
     git tag -f merge-base $mergeBase &>/dev/null
+
+    # Make HEAD work in lowercase on Linux
+    # (macOS filesystems are case-insensitive by default so this isn't needed)
+    # git tag -f head HEAD &>/dev/null
 }
 precmd_functions+='git_merge_base'
 

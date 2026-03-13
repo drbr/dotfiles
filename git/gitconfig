@@ -68,6 +68,7 @@
   # default, this acts like `git diff` in that it includes unstaged changes. Diff against HEAD or a
   # different branch (or use --stat) by adding args to the command; e.g. `git diffpr otherBranch --stat`
   diffpr = !git diff --merge-base $(git remote-default-branch)
+  statpr = diffpr --stat
 
   # Switch to the default branch, pull the latest, and remove deleted remote branches
   # and the local branches that tracked them.

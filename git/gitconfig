@@ -13,11 +13,11 @@
 
 [color "decorate"]
   # Custom colors for different ref types when running `git log` (see aliases below).
-  # The defaults are fine, but I like these better with my terminal color scheme.
+  # The defaults are fine, but I personally like these better.
   HEAD = magenta bold
-  branch = red bold
-  remoteBranch = green bold
-  tag = cyan
+  branch = green bold
+  remoteBranch = red
+  tag = magenta
   stash = magenta
 
 [alias]
@@ -55,7 +55,7 @@
   # - `git dag` shows the DAG of the entire repo with all local branches, tags, and local main.
   # - `git dagr` is the same as `git dag` but also with remote main.
   # - Use `git dag --all` to show everything, including the remote branches.
-  graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%ch) %C(blue)<%an>%Creset'
+  graph = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%Creset %s %C(cyan)(%ch) %C(blue)<%an>%Creset'
   dab = !git graph HEAD
   dag = !git dab --branches --tags
   dagr = !git dab $(git remote-default-branch) --branches --tags

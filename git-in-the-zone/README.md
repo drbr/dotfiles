@@ -17,3 +17,7 @@ times to various groups, and the info here is some combination of an outline and
 these written materials should be understandable on their own, they don't include super-detailed
 step-by-step instructions or screenshots because they're intended to be consumed along with a
 demonstration.
+
+## Contents
+
+- [Part 0: Basics and setup](./0-basics-and-setup.md)

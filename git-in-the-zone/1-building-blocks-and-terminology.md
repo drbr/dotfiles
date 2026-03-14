@@ -70,10 +70,6 @@ and committed all the changes reported by `git status`, your working tree will a
 - `git commit -m “message”` uses the given message and skips the editor
 - `git commit -a` stages all changes and then commits them (_but this does **not** add untracked
   files!_)
-- `git commit --amend` lets you rewrite a commit you've just made. It re-makes the current commit
-  with the addition of any currently-staged files, and lets you give a new description. This is
-  useful if you made a commit but then realized you forgot to include a file, or if you made a typo
-  in the description.
 
 > [!NOTE]
 > **Commit early and commit often!** Committing is the core unit of saving your work in Git,

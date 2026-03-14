@@ -70,19 +70,56 @@ and committed all the changes reported by `git status`, your working tree will a
 - `git commit -m “message”` uses the given message and skips the editor
 - `git commit -a` stages all changes and then commits them (_but this does **not** add untracked
   files!_)
-- `git commit --amend` lets you rewrite a commit you've already made. It will give you the
-  opportunity to rename the commit, and will add any currently-staged files to that commit. This is
-  useful if you made a commit but then realized you forgot to include a file.
+- `git commit --amend` lets you rewrite a commit you've just made. It re-makes the current commit
+  with the addition of any currently-staged files, and lets you give a new description. This is
+  useful if you made a commit but then realized you forgot to include a file, or if you made a typo
+  in the description.
 
 > [!NOTE]
 > **Commit early and commit often!** Committing is the core unit of saving your work in Git,
 > and **commits are immutable** once made. Once you've made a commit, it's safe in the repo and it
 > can be recovered even if you mess something up later on.
 
+#### Internal representation
+
+What exactly _is_ a commit? Internally, Git stores each commit as an encapsulation of the following
+metadata, indexed by the **commit ID** (the sha-1 hash of the commit object):
+
+- Tree: reference to the internal git object that stores the file tree at that commit
+- Parent: ID of the commit that this one was created from
+- Author, date, and commit message
+
+I'm not going to go deeper into the object store here, but I recommend reading [Git from the Bottom
+Up](https://jwiegley.github.io/git-from-the-bottom-up/) for a concise and thorough explanation.
+
+> [!TIP]
+> If you're a nerd, you can view the contents of these internal objects with
+> `git cat-file -p <hash>`.
+
+You can show a human-readable summary of a single commit, including the diff from its parent, with
+`git show <commit>`.
+
+## `git log` and the DAG
+
+Once you've made one commit, you can edit, stage, and commit again, forming a chain of commits! We
+can see a human-readable version of the commit history with `git log`.
+
+Because of the parent-child relationship, all the commits in the repo can be represented as a
+**directed acyclic graph (DAG)**. As we'll soon see, because we can have multiple commits with the
+same parent, it's useful to be able to see the branches visually. We can view this graph in the
+command line with `git log --graph --oneline`.
+
+> [!IMPORTANT]
+> **Understanding the DAG is key to using Git intuitively.** All the other Git commands
+> in this talk are just specific ways to manipulate the DAG.
+
+> [!TIP]
+> Configure a `git dag` alias to view the DAG quickly and frequently!
+
 ## Viewing diffs
 
-Before committing, you may want to verify the actual changes you’re staging, not just the names of
-the files. **`git diff` will show the diffs** between the working tree and the last commit:
+Sometimes, before committing, you'll want to verify the actual changes you’re staging, not just the
+names of the files. **`git diff` will show the diffs** between the working tree and the last commit:
 
 - `git diff` shows only the unstaged changes (diffs the working tree against the index)
 - `git diff --staged` shows only the staged changes (diffs the index against the current commit)
@@ -90,43 +127,19 @@ the files. **`git diff` will show the diffs** between the working tree and the l
 
 _Note: none of these diffs will include untracked files!_
 
-Adding the `--stat` option to any `git diff` shows just the filenames and lines added/removed,
-instead of the actual changes.
+Other useful features of the diff command, which can be combined in various ways:
 
-## Commits and the DAG
-
-Now that we've made some commits, how can we see the history?
-
-- `git log` shows the commit history.
-
-By default, each log entry shows:
-
-- **Commit hash** (ID): the SHA-1 checksum of the commit
-- Author and date
-- Commit message
-
-Each commit also has a parent, which is the commit that it was created from. From that relationship,
-all the commits in the repo can be represented as a graph, specifically a **directed acyclic graph
-(DAG)**. We can have Git explicitly show it with `git log --graph --oneline`.
-
-**Understanding the DAG is key to using Git intuitively.** Many of the other Git commands are just
-semantic ways to edit the DAG.
-
-> [!TIP]
-> Configure a `git dag` alias to view the DAG quickly and frequently!
-
-> [!NOTE]
-> You can think of a commit as either the state of the entire repo at a particular point, or
-> the parent commit, plus some changes. Since the DAG is a graph, these two mental models are
-> equivalent, and either may make more or less sense for a given purpose.
+- `git diff <old-commit> <new-commit>` diffs those entire two commits
+- `git diff [commits] <filename>` diffs only the specific file
+- `git diff --stat` shows just the filenames and added/removed line count
 
 ## Refs
 
-While we can always refer to any commit by its hash, this is of limited usefulness. Commits can also
-be referenced by pointers, or **refs**. There are three types of refs: HEAD, tags, and branches.
-With any Git command that takes a commit as an argument, we can give a ref in its place.
+While we can always find any commit by its hash, this is of limited usefulness. To help with this,
+Git gives us **refs**, which are pointers with human-readable names. Anywhere Git expects a commit,
+we can give a ref in its place. There are three types of refs: HEAD, tags, and branches.
 
-### HEAD and `git checkout`
+### HEAD (and `git checkout`)
 
 The most important ref is called **HEAD, which always points to the commit we’re currently “on”.**
 Whenever we make a commit with `git commit`, HEAD moves to that new commit.

@@ -21,3 +21,4 @@ demonstration.
 ## Contents
 
 - [Part 0: Basics and setup](./0-basics-and-setup.md)
+- [Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md)

@@ -32,7 +32,8 @@ I use the CLI exclusively, so that's what I'll focus on here. Even if you normal
 higher-level tool, it's good to understand the basic tool too — all the GUIs are using these same
 commands under the hood!
 
-> [!IMPORTANT] **The biggest thing that can help you make sense of Git is _visibility into what's
+> [!IMPORTANT]
+> **The biggest thing that can help you make sense of Git is _visibility into what's
 > going on_. Customizing your environment to give you this visibility is key to mastering the
 > tool.**
 

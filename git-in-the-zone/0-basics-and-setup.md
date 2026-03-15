@@ -19,7 +19,8 @@ Other good resources:
 
 - [Git from the Bottom Up](https://www.youtube.com/watch?v=2sjqTHE0zok) — short HTML book; describes
   the mental model in a solid way
-- [MIT lecture](https://www.youtube.com/watch?v=2sjqTHE0zok) — 90 minute video
+- [MIT Missing Semester lecture](https://missing.csail.mit.edu/2026/version-control/)
+  - Watch the first 30 minutes (or read the notes) to understand the way Git stores data internally
 - [Learn Git Branching](https://learngitbranching.js.org/) — interactive game to practice merging
   and rebasing
 
@@ -82,21 +83,6 @@ reference](https://git-scm.com/docs/git-config#_configuration_file)):
 - `git config feature.manyFiles true` (to improve perf in very large repos. Don't set this globally,
   since it pertains to only one repo)
 
-Consider setting up a richer CLI diff viewer, such as [Delta](https://github.com/dandavison/delta).
-
-I also recently added a precmd function to my `.zshrc` that sets an ever-updating `merge-base` tag,
-which is very helpful when doing rebases:
-
-```
-git_merge_base() {
-    mergeBase=$(git merge-base HEAD origin/main) 2>/dev/null
-    git tag -f merge-base $mergeBase &>/dev/null
-}
-
-typeset -ga precmd_functions
-precmd_functions+='git_merge_base'
-```
-
 ### Aliases
 
 Make aliases for common commands. You could set these with `git config --global` but it's just as
@@ -116,6 +102,24 @@ dag = !LESS="'-S -# 4'" git log --graph --oneline --pretty=format:'%C(auto)%h%d%
 
 # Show all the changes on the current branch, as it would show on a pull request
 diffpr = diff --merge-base origin/main
+```
+
+### Other useful setup
+
+Consider setting up a rich command-line diff viewer, such as
+[Delta](https://github.com/dandavison/delta).
+
+I also recently added a pre-command function to my `.zshrc` that sets an ever-updating `merge-base`
+tag, which is very helpful when doing rebases:
+
+```
+git_merge_base() {
+    mergeBase=$(git merge-base HEAD origin/main) 2>/dev/null
+    git tag -f merge-base $mergeBase &>/dev/null
+}
+
+typeset -ga precmd_functions
+precmd_functions+='git_merge_base'
 ```
 
 ## Part 0 conclusion

@@ -20,9 +20,10 @@ files and subfolders within it. As you work in the repo, you can make changes to
 directly, and as you use Git to move through the version history, Git automatically updates the
 files in the working tree to their corresponding versions.
 
-**`git status` is your primary window into the CLI.** It tells you the current state of your repo
-and often gives suggestions about what commands to use next. Run it _a lot_ (or get the same info
-from your shell prompt) so you always know the current state of the repo.
+**[`git status`](https://git-scm.com/docs/git-status) is your primary window into the CLI.** It
+tells you the current state of your repo and often gives suggestions about what commands to use
+next. Run it _a lot_ (or get the same info from your shell prompt) so you always know the current
+state of the repo.
 
 ## Making, staging, and committing changes
 
@@ -39,9 +40,9 @@ Simply edit the files!
 
 #### 2. Stage
 
-Before committing changes, you first must **stage** (or “add”) them with `git add`. Staging files to
-the **index** (casually known as the “staging area”) allows you to control which changes you want
-to include in a commit.
+Before committing changes, you first must **stage** (or “add”) them with [`git
+add`](https://git-scm.com/docs/git-add). Staging files to the **index** (casually known as the
+“staging area”) allows you to control which changes you want to include in a commit.
 
 As you continue to make changes to the working tree, `git status` will report them in one of three
 states:
@@ -54,22 +55,22 @@ If you want to unstage files or discard changes, the `git status` output will te
 
 > [!NOTE]
 >
-> Staging happens at a change granularity, not a file granularity. So if you stage a file
-> and then make more changes to it, the staged changes will show up in “to be committed” and the
-> further changes will show up as “not staged”!
+> Staging happens at a change granularity, not a file granularity. So if you stage a file and then
+> make more changes to it, the staged changes will show up in “to be committed” and the further
+> changes will show up as “not staged”!
 
 > [!TIP]
 >
-> If you give a directory as the argument to these commands, it will act on every descendant
-> file of that directory. So, you can run `git add .` at the working tree root to stage everything,
-> or `git restore --staged .` to unstage everything. _Doing this on a large directory can take a
-> long time!_
+> If you give a directory as the argument to these commands, it will act on every descendant file of
+> that directory. So, you can run `git add .` at the working tree root to stage everything, or `git
+restore --staged .` to unstage everything. _Doing this on a large directory can take a while!_
 
 #### 3. Commit
 
-Finally, **commit the staged changes with `git commit`**. The act of committing will save those
-changes safely to the repo, and subsequent changes will be made on top of that commit. If you staged
-and committed all the changes reported by `git status`, your working tree will again be clean.
+Finally, **commit the staged changes with [`git commit`](https://git-scm.com/docs/git-commit)**. The
+act of committing will save those changes safely to the repo, and subsequent changes will be made on
+top of that commit. If you staged and committed all the changes reported by `git status`, your
+working tree will again be clean.
 
 - `git commit` opens a text editor to write the commit message
 - `git commit -m “message”` uses the given message and skips the editor
@@ -78,9 +79,9 @@ and committed all the changes reported by `git status`, your working tree will a
 
 > [!NOTE]
 >
-> **Commit early and commit often!** Committing is the core unit of saving your work in Git,
-> and **commits are immutable** once made. Once you've made a commit, it's safe in the repo and it
-> can be recovered even if you mess something up later on.
+> **Commit early and commit often!** Committing is the core unit of saving your work in Git, and
+> **commits are immutable** once made. Once you've made a commit, it's safe in the repo and it can
+> be recovered even if you mess something up later on.
 
 #### Internal representation
 
@@ -96,8 +97,8 @@ Up](https://jwiegley.github.io/git-from-the-bottom-up/) for a concise and thorou
 
 > [!TIP]
 >
-> If you're a nerd, you can view the contents of these internal objects with
-> `git cat-file -p <hash>`.
+> If you're a nerd, you can view the contents of these internal objects with `git cat-file -p
+<hash>`.
 
 You can show a human-readable summary of a single commit, including the diff from its parent, with
 `git show <commit>`.
@@ -105,7 +106,8 @@ You can show a human-readable summary of a single commit, including the diff fro
 ## `git log` and the DAG
 
 Once you've made one commit, you can edit, stage, and commit again, forming a chain of commits! We
-can see a human-readable version of the commit history with `git log`.
+can see a human-readable version of the commit history with [`git
+log`](https://git-scm.com/docs/git-log).
 
 Because of the parent-child relationship, all the commits in the repo can be represented as a
 **directed acyclic graph (DAG)**. As we'll soon see, because we can have multiple commits with the
@@ -114,8 +116,8 @@ command line with `git log --graph --oneline`.
 
 > [!IMPORTANT]
 >
-> **Understanding the DAG is key to using Git intuitively.** All the other Git commands
-> in this talk are just specific ways to manipulate the DAG.
+> **Understanding the DAG is key to using Git intuitively.** All the other Git commands in this talk
+> are just specific ways to manipulate the DAG.
 
 > [!TIP]
 >
@@ -124,7 +126,8 @@ command line with `git log --graph --oneline`.
 ## Viewing diffs
 
 Sometimes, before committing, you'll want to verify the actual changes you’re staging, not just the
-names of the files. **`git diff` will show the diffs** between the working tree and the last commit:
+names of the files. **[`git diff`](https://git-scm.com/docs/git-diff) will show the diffs** between
+the working tree and the last commit:
 
 - `git diff` shows only the unstaged changes (diffs the working tree against the index)
 - `git diff --staged` shows only the staged changes (diffs the index against the current commit)
@@ -141,17 +144,18 @@ Other useful features of the diff command, which can be combined in various ways
 ## Refs
 
 While we can always find any commit by its hash, this is of limited usefulness. To help with this,
-Git gives us **refs**, which are pointers with human-readable names. Anywhere Git expects a commit,
-we can give a ref in its place. There are three types of refs: HEAD, tags, and branches.
+Git gives us [**refs**](https://git-scm.com/book/en/v2/Git-Internals-Git-References), which are
+pointers with human-readable names. Anywhere Git expects a commit, we can give a ref in its place.
+There are three types of refs: HEAD, tags, and branches.
 
 ### HEAD (and `git checkout`)
 
 The most important ref is called **HEAD, which always points to the commit we’re currently “on”.**
 Whenever we make a commit with `git commit`, HEAD moves to that new commit.
 
-We can jump around the DAG and “check out” the contents of different commits using **`git checkout
-<commit>`**. This command moves HEAD to the given commit, and updates the working tree to
-show the state of the files at that commit.
+We can jump around the DAG and “[check out](https://git-scm.com/docs/git-checkout)” the contents of
+different commits using **`git checkout <commit>`**. This command moves HEAD to the given commit,
+and updates the working tree to show the state of the files at that commit.
 
 > [!TIP]
 >
@@ -162,25 +166,26 @@ show the state of the files at that commit.
 Can you check out a different commit when you have a dirty working tree? Yes, but only if your
 uncommitted changes don't conflict with the commit you're checking out.
 
-You can **use `git stash` to quickly put away your uncommitted changes** when you need a clean
-working tree. Get them back with `git stash pop` (the stash is actually a stack: you can stash
-multiple things and even name them, but one level deep is generally sufficient). I usually like to
-pop as soon as possible, lest I forget that I have something stashed.
+You can **use [`git stash`](https://git-scm.com/docs/git-stash) to quickly put away your uncommitted
+changes** when you need a clean working tree. Get them back with `git stash pop` (the stash is
+actually a stack: you can stash multiple things and even name them, but one level deep is generally
+sufficient). I usually like to pop as soon as possible, lest I forget that I have something stashed.
 
 ### Tags
 
-**Tags are static pointers to specific commits.** Create a tag to give a human-friendly name to an
-important commit, to make it easier to find later.
+**[Tags](https://git-scm.com/docs/git-tag) are static pointers to specific commits.** Create a tag
+to give a human-friendly name to an important commit, to make it easier to find later.
 
 Many open-source projects, for example, use tags such as `v1.2.3` to label the commit that a
 specific published version of the project was built from.
 
-- Create a tag at HEAD with `git tag <name>`. Once it's created, a tag does not move; it always points to the same commit.
+- Create a tag at HEAD with `git tag <name>`. Once it's created, a tag does not move; it always
+  points to the same commit.
 
 ### Branches
 
-**Branches are dynamic pointers.** Unlike what the name might suggest, a Git branch is not a group
-of commits; it is a _pointer to a single commit_.
+**[Branches](https://git-scm.com/docs/git-branch) are dynamic pointers.** Unlike what the name might
+suggest, a Git branch is not a group of commits; it is a _pointer to a single commit_.
 
 Unlike tags, when you have a branch checked out, **it will move along with HEAD as you make
 commits**.
@@ -244,8 +249,10 @@ then, however, you can still access any commit if you know its hash, or via the 
 
 ### `git reflog`
 
-The **reflog** (pronounced “ref log”) contains the history of HEAD for the last 30 days. Every time
-HEAD moves, a new entry gets pushed to the reflog.
+The [**reflog**](https://git-scm.com/docs/git-reflog) (pronounced “ref log”) contains the history of
+HEAD for the last 30 days. Every time HEAD moves, a new entry gets pushed to the reflog.
+
+- View the reflog with `git reflog`.
 
 The reflog is one of Git’s most powerful features, because it can be used as an “escape hatch” if
 you made a mistake. As long as you were in a good state in the past (and you actually made a

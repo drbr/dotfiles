@@ -11,7 +11,7 @@ just won't update any branches.
 
 Up until now, you may have been thinking, “why do we keep calling this a DAG? When branches diverge
 from their parents, it’s just a tree!” While it’s true that all trees are valid DAGs, Git does allow
-branches to converge. This operation is called **Merge**.
+branches to converge. This operation is called [**Merge**](https://git-scm.com/docs/git-merge).
 
 - `git merge <source>` merges `source` into HEAD. This makes a new **merge commit** that has both
   HEAD and source as parents.
@@ -32,8 +32,9 @@ Special cases when the two branches are not diverged:
 
 ## 2. Reset
 
-Moves the branch pointer to wherever you want. `git reset` is a lower-level tool that enables
-a few different higher-level workflows. Here are some recipes for common tasks.
+Moves the branch pointer to wherever you want. [`git reset`](https://git-scm.com/docs/git-reset) is
+a lower-level tool that enables a few different higher-level workflows. Here are some recipes for
+common tasks.
 
 > [!CAUTION]
 >
@@ -49,9 +50,9 @@ where you want.
 
 ### Revert
 
-One possible way to revert a commit is to use `git revert`, which adds a commit whose diff is the
-opposite of the commit to be "reverted". This has its uses, particularly when you want to revert
-a commit from the distant past.
+One possible way to revert a commit is to use [`git revert`](https://git-scm.com/docs/git-revert),
+which adds a commit whose diff is the opposite of the commit to be "reverted". This has its uses,
+particularly when you want to revert a commit from the distant past.
 
 But another option to revert the latest commit on a local branch is to use a hard reset. `git reset
 --hard HEAD~` will simply roll back your branch to the previous commit (and wipe out any uncomitted
@@ -108,8 +109,8 @@ command. One way to squash is with with a soft reset.
 
 ## 3. Cherry-pick
 
-Applies the diff from a different commit(s) onto HEAD. A common use case for this is applying a
-bugfix to a release branch.
+[`git cherry-pick`](https://git-scm.com/docs/git-cherry-pick) applies the diff from a different
+commit(s) onto HEAD. A common use case for this is applying a bugfix to a release branch.
 
 - Single commit: `git cherry-pick <a>`
 - Multiple individual commits: `git cherry-pick <a> <b>`
@@ -121,9 +122,9 @@ and continue, or abort.
 
 ## 4. Rebase
 
-Copies the current branch's commits onto a different parent commit and moves the branch pointer
-there. In a real tree metaphor, this is like cutting off a branch and grafting it onto another part
-of the tree.
+[`git rebase`](https://git-scm.com/docs/git-rebase) copies the current branch's commits onto a
+different parent commit and moves the branch pointer there. In a real tree metaphor, this is like
+cutting off a branch and grafting it onto another part of the tree.
 
 - Long form: `git rebase <current-base> --onto <new-base>`
   - Takes the sequence of commits between `current-base` and HEAD, and replays them on top of

@@ -25,14 +25,15 @@ connected only to that central repo. That's the setup we'll talk about here.
 
 # Remote-tracking branches and `git fetch`
 
-When you clone a repository from GitHub, the GitHub repo is set up as a **remote** called `origin`.
-For most GitHub projects, this is the only remote you'll have.
+When you clone a repository from GitHub, the GitHub repo is set up as a
+[**remote**](https://git-scm.com/docs/git-remote) called `origin`. For most GitHub projects, this is
+the only remote you'll have.
 
-`git fetch` synchronizes your repo's view of the remotes' refs by updating the **remote-tracking
-branch** pointers in your local repo. We can list all the remote-tracking branches with `git branch
--a` — the remote-tracking branches are displayed in red and are prefixed with the name of the
-remote. Running `git fetch` by itself does not change any local branches; it only changes the
-position of the remote pointers.
+[`git fetch`](https://git-scm.com/docs/git-fetch) synchronizes your repo's view of the remotes' refs
+by updating the **remote-tracking branch** pointers in your local repo. We can list all the
+remote-tracking branches with `git branch -a` — the remote-tracking branches are displayed in red
+and are prefixed with the name of the remote. Running `git fetch` by itself does not change any
+local branches; it only changes the position of the remote pointers.
 
 The easiest way to understand how your remotes are configured is to look directly at the `[remote]`
 sections of the `.git/config` file in a specific repo. The `fetch` entry
@@ -59,9 +60,10 @@ to match it. For example, if there's a remote-tracking branch `remotes/origin/br
 
 ## Pulling
 
-On any branch with an upstream, run `git pull` to bring it into sync with the remote.
+On any branch with an upstream, run [`git pull`](https://git-scm.com/docs/git-pull) to bring it into
+sync with the remote.
 
-`git pull` is two-part operation: first, it runs `git fetch` to fetch the latest positions of all
+`git pull` is a two-part operation: first, it runs `git fetch` to fetch the latest positions of all
 the remote branches, then (by default) it merges the current branch's upstream into the current
 branch. Usually, this will be a fast-forward, but if the branches have diverged, then pulling will
 result in a merge commit. In the olden days, a divergence was not so common; but nowadays, when AI
@@ -79,10 +81,10 @@ enabled, you can get the same behavior with `git pull --rebase`.
 
 ## Pushing
 
-To push a local branch to a remote, run `git push`. As long as you have the `push.autoSetupRemote`
-config set to true, this will also configure the upstream for that branch (if you don't have that
-config enabled, do this with `git push -u` instead). By default, this will push to a remote branch
-with the same name as the local branch.
+To push a local branch to a remote, run [`git push`](https://git-scm.com/docs/git-push). As long as
+you have the `push.autoSetupRemote` config set to true, this will also configure the upstream for
+that branch (if you don't have that config enabled, do this with `git push -u` instead). By default,
+this will push to a remote branch with the same name as the local branch.
 
 Pushing gets more complicated if the local branch is not strictly ahead of the remote. In that case,
 pushing would cause the remote branch to lose commits, so it requires the `-f` override. If you've
@@ -96,7 +98,7 @@ a coworker or a bot) that you might be losing.
 > In team environments where many developers can push to the same remote, it's common for each
 > person to prefix their branches with their name. One can do this by prefixing all the local
 > branches and then pushing, but it's also possible to rename the branch when pushing by explicitly
-> specifying a refspec:
+> specifying a [refspec](https://git-scm.com/docs/git-push#Documentation/git-push.txt-refspec):
 >
 > - `git push origin my-branch:my-name/my-branch`
 

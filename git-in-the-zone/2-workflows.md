@@ -1,3 +1,5 @@
+[Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md) | [Part 3: Remote repositories](./3-remote-repositories.md)
+
 # Part 2: Workflows
 
 Now we're going to look at some ways to manipulate the DAG in more interesting ways. Keep in mind
@@ -189,3 +191,7 @@ We've now talked about various operations that can manipulate branches and the D
   - squash
 - Cherry-pick
 - Rebase
+
+---
+
+[Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md) | [Part 3: Remote repositories](./3-remote-repositories.md)

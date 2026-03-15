@@ -1,3 +1,5 @@
+[Part 2: Workflows](./2-workflows.md)
+
 # Part 3: Remote repositories
 
 Git is a distributed VCS, it's not a "client/server" model like version control systems of old. In
@@ -151,3 +153,7 @@ We've now talked about:
 - Pushing and pulling remote refs
 - A typical workflow involving GitHub
 - Deleting old branches
+
+---
+
+[Part 2: Workflows](./2-workflows.md)

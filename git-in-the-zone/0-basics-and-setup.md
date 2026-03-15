@@ -1,3 +1,5 @@
+[Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md)
+
 # Part 0: Basics and setup
 
 ## Basic info
@@ -130,3 +132,7 @@ We've now covered:
 - Where to look for help
 - The importance of customizing the command prompt
 - How to set config, and some useful aliases
+
+---
+
+[Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md)

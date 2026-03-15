@@ -24,3 +24,4 @@ demonstration.
 - [Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md)
 - [Part 2: Workflows](./2-workflows.md)
 - [Part 3: Remote repositories](./3-remote-repositories.md)
+- [Part 4: Worktrees](./4-worktrees.md)

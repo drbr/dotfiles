@@ -1,4 +1,4 @@
-[Part 2: Workflows](./2-workflows.md)
+[Part 2: Workflows](./2-workflows.md) | [Part 4: Worktrees](./4-worktrees.md)
 
 # Part 3: Remote repositories
 
@@ -156,4 +156,4 @@ We've now talked about:
 
 ---
 
-[Part 2: Workflows](./2-workflows.md)
+[Part 2: Workflows](./2-workflows.md) | [Part 4: Worktrees](./4-worktrees.md)

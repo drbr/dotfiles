@@ -25,3 +25,4 @@ demonstration.
 - [Part 2: Workflows](./2-workflows.md)
 - [Part 3: Remote repositories](./3-remote-repositories.md)
 - [Part 4: Worktrees](./4-worktrees.md)
+- [Appendix: Bonus topics](./appendix-bonus-topics.md)

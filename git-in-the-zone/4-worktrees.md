@@ -1,4 +1,4 @@
-[Part 3: Remote repositories](./3-remote-repositories.md)
+[Part 3: Remote repositories](./3-remote-repositories.md) | [Appendix: Bonus topics](./appendix-bonus-topics.md)
 
 # Part 4: Worktrees
 
@@ -32,4 +32,4 @@ and no interference.
 
 ---
 
-[Part 3: Remote repositories](./3-remote-repositories.md)
+[Part 3: Remote repositories](./3-remote-repositories.md) | [Appendix: Bonus topics](./appendix-bonus-topics.md)

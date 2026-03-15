@@ -1,7 +1,7 @@
 # Git in the Zone
 
-Git is historically notorious for being somewhat hard to understand and
-use. This is my attempt at a tutorial.
+Git is historically notorious for being somewhat hard to understand and use. This is my attempt at a
+tutorial, aimed at people who have been exposed to Git but want to become more of a power user.
 
 [![XKCD comic introducing Git: "How do we use it?" "No idea; just memorize these shell
 commands…"](https://imgs.xkcd.com/comics/git.png)](https://xkcd.com/1597)

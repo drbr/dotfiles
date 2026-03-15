@@ -21,6 +21,7 @@ Special cases when the two branches are not diverged:
   and no merge commit is made.
 
 > [!NOTE]
+>
 > When merging, you might encounter **conflicts** and be left in a transient state. This transient
 > state is similar to where you'd be if you've staged some files but haven't committed them yet.
 > Follow the advice in `git status` to resolve, then `git commit` to complete the merge.
@@ -33,6 +34,7 @@ Moves the branch pointer to wherever you want. `git reset` is a lower-level tool
 a few different higher-level workflows. Here are some recipes for common tasks.
 
 > [!CAUTION]
+>
 > Be extra careful when running `git reset` on a working tree with uncommited changes. Most of these
 > workflows should ideally be run only on a clean working tree.
 
@@ -54,6 +56,7 @@ But another option to revert the latest commit on a local branch is to use a har
 changes). **This can be especially useful if you want to undo a merge.**
 
 > [!TIP]
+>
 > We can use the shorthand `HEAD~n` to refer to the nth parent of HEAD.
 >
 > There does exist a syntax to refer to a specific parent of a merge commit, but that's prone to
@@ -72,11 +75,13 @@ A soft reset will move the branch pointer but keep the working tree and index in
 state, thus showing the undone commit as staged files ready to commit again.
 
 > [!NOTE]
+>
 > The default style of reset is “mixed”, which is similar to soft (but leaves the diff as unstaged).
 > Mixed and soft are roughly equivalent in terms of safety, since neither of them will alter the
 > working tree.
 
 > [!TIP]
+>
 > `git commit --amend` is a useful shorthand that lets you rewrite the commit at HEAD; it's the
 > equvalent of doing a soft reset and then immediately committing again. This allows you to change
 > the commit's description and/or add any currently-staged files to HEAD. Amending a commit is
@@ -93,6 +98,7 @@ command. One way to squash is with with a soft reset.
    `git commit -m "New message"`
 
 > [!TIP]
+>
 > A common use case for squashing is to "sync" your branch with main. You can do this by merging
 > main into the branch (`git merge main`), then squashing your whole branch down to a single commit
 > on top of main (`git reset --soft main` and then committ), thereby removing the merge commit. This

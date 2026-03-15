@@ -6,6 +6,7 @@ A **repository** (”repo”) is the largest unit of code organization in Git, w
 (and tracks changes for) an entire project/library/application.
 
 > [!CAUTION]
+>
 > **The `.git` folder contains all of Git’s internal metadata and version history for the repo. Do
 > not delete it – if you do, your repo is gone!** Also, do not modify its contents manually – that’s
 > what the Git commands are for. You could say that the `.git` folder _is_ the repo.
@@ -50,11 +51,13 @@ states:
 If you want to unstage files or discard changes, the `git status` output will tell you what to do.
 
 > [!NOTE]
+>
 > Staging happens at a change granularity, not a file granularity. So if you stage a file
 > and then make more changes to it, the staged changes will show up in “to be committed” and the
 > further changes will show up as “not staged”!
 
 > [!TIP]
+>
 > If you give a directory as the argument to these commands, it will act on every descendant
 > file of that directory. So, you can run `git add .` at the working tree root to stage everything,
 > or `git restore --staged .` to unstage everything. _Doing this on a large directory can take a
@@ -72,6 +75,7 @@ and committed all the changes reported by `git status`, your working tree will a
   files!_)
 
 > [!NOTE]
+>
 > **Commit early and commit often!** Committing is the core unit of saving your work in Git,
 > and **commits are immutable** once made. Once you've made a commit, it's safe in the repo and it
 > can be recovered even if you mess something up later on.
@@ -89,6 +93,7 @@ I'm not going to go deeper into the object store here, but I recommend reading [
 Up](https://jwiegley.github.io/git-from-the-bottom-up/) for a concise and thorough explanation.
 
 > [!TIP]
+>
 > If you're a nerd, you can view the contents of these internal objects with
 > `git cat-file -p <hash>`.
 
@@ -106,10 +111,12 @@ same parent, it's useful to be able to see the branches visually. We can view th
 command line with `git log --graph --oneline`.
 
 > [!IMPORTANT]
+>
 > **Understanding the DAG is key to using Git intuitively.** All the other Git commands
 > in this talk are just specific ways to manipulate the DAG.
 
 > [!TIP]
+>
 > Configure a `git dag` alias to view the DAG quickly and frequently!
 
 ## Viewing diffs
@@ -145,6 +152,7 @@ We can jump around the DAG and “check out” the contents of different commits
 show the state of the files at that commit.
 
 > [!TIP]
+>
 > `git checkout -` will go back to the commit you were last on.
 
 #### Stashing
@@ -181,6 +189,7 @@ commits**.
 - List all the branches with `git branch` (or verbosely with `git branch -vv`)
 
 > [!NOTE]
+>
 > When Git was new, one of its differentiating features was “cheap local branching.” In contrast to
 > other VCSs from that time (especially those that used “changesets”):
 >

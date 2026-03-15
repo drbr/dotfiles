@@ -34,6 +34,7 @@ higher-level tool, it's good to understand the basic tool too — all the GUIs a
 commands under the hood!
 
 > [!IMPORTANT]
+>
 > **The biggest thing that can help you make sense of Git is _visibility into what's
 > going on_. Customizing your environment to give you this visibility is key to mastering the
 > tool.**

@@ -23,3 +23,4 @@ demonstration.
 - [Part 0: Basics and setup](./0-basics-and-setup.md)
 - [Part 1: Building blocks and terminology](./1-building-blocks-and-terminology.md)
 - [Part 2: Workflows](./2-workflows.md)
+- [Part 3: Remote repositories](./3-remote-repositories.md)

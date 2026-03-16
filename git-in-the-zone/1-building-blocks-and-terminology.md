@@ -213,6 +213,24 @@ commits**.
 > different code changes, and it’s easy to switch between them as the work requires. Any time you
 > want to try something out, make a branch!
 
+#### The default branch: `main` (or `master`)
+
+Every repo has a “default branch”, which is the initial branch that Git checks out when a repo is
+created or cloned. The default branch can be named anything, but the current convention on GitHub is
+to call it `main` (the other common option, especially for older repos, is `master`). I'll be using
+`main` here to refer to the default branch.
+
+Processes vary across projects, but the default branch is usually the one on which active
+development occurs; that is, if you’re making code changes in a repository, your commit(s) should
+eventually end up in `origin/main` (we'll talk about how to do that later on).
+
+In repositories cloned from GitHub, the `origin/HEAD` ref will point to the default branch.
+
+> [!TIP]
+>
+> There’s nothing different about the default branch from the perspective of Git. It behaves exactly
+> the same as any other branch — they’re all just pointers on a graph!
+
 #### Deleting branches
 
 When you delete a branch (`git branch -d <name>`), you're just removing the pointer.

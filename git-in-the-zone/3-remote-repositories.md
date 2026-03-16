@@ -43,8 +43,8 @@ If you don't want to fetch all the branches, you can customize these refspecs ac
 # Local and upstream branches
 
 Any local branch can be configured to have an "upstream", which tells Git that your local branch
-should correspond to a particular remote branch. When you clone a repo from GitHub, the `main` (or
-`master`) branch will already be configured in this way.
+should correspond to a particular remote branch. When you clone a repo from GitHub, the `main`
+branch will already be configured in this way.
 
 - Run `git branch -vv` to see all the branches' upstream configurations (as this is the
   fully-verbose way to list branches, I recommend making an alias for this). This will also show if

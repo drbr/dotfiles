@@ -19,7 +19,7 @@ than what you can find linked from here.
 
 Other good resources:
 
-- [Git from the Bottom Up](https://www.youtube.com/watch?v=2sjqTHE0zok) — short HTML book; describes
+- [Git from the Bottom Up](https://jwiegley.github.io/git-from-the-bottom-up) — short HTML book; describes
   the mental model in a solid way
 - [MIT Missing Semester lecture](https://missing.csail.mit.edu/2026/version-control/)
   - Watch the first 30 minutes (or read the notes) to understand the way Git stores data internally

@@ -85,15 +85,17 @@ working tree will again be clean.
 
 #### Internal representation
 
-What exactly _is_ a commit? Internally, Git stores each commit as an encapsulation of the following
-metadata, indexed by the **commit ID** (the sha-1 hash of the commit object):
+What exactly _is_ a commit? A commit can be thought of as a "snapshot" of all the files, along with
+some metadata. Internally, Git stores each commit as an object with the following fields, indexed by
+the **commit ID** (the sha-1 hash of the commit object):
 
 - Tree: reference to the internal git object that stores the file tree at that commit
 - Parent: ID of the commit that this one was created from
 - Author, date, and commit message
 
-I'm not going to go deeper into the object store here, but I recommend reading [Git from the Bottom
-Up](https://jwiegley.github.io/git-from-the-bottom-up/) for a concise and thorough explanation.
+I'm not going to go deeper into the internal structure here, but I recommend reading [Git from the
+Bottom Up](https://jwiegley.github.io/git-from-the-bottom-up/) for a better explanation than I can
+give.
 
 > [!TIP]
 >
